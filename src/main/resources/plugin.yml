@@ -1,0 +1,12 @@
+name: ${project.name}
+description: ${project.description}
+author: quantiom
+version: ${project.version}
+main: ${project.groupId}.${project.artifactId}.${project.name}
+depend: [Kotlin]
+softdepend: [LuckPerms, PlaceholderAPI, GroupManager, PermissionsEx, bPermissions, DiscordSRV, Dynmap, LibsDisguises, PlayerParticles, Essentials, PlaceholderAPI, ProtocolLib]
+commands:
+  vanish:
+    description: The main vanish command.
+    aliases: [v, advancedvanish]
+    usage: /vanish
