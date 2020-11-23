@@ -12,7 +12,7 @@ AdvancedVanish is a fully customizable and advanced vanish plugin made in Kotlin
   - Placeholders
   - Much more...
 - Vanished players are **completely** invisible, as if they are not even online.
-- Vanish priorities/levels ([more info](https://github.com/quantiom/AdvancedVanish/blob/main/src/main/resources/config.yml#L93-L117))
+- Vanish priorities/levels ([more info](https://github.com/quantiom/AdvancedVanish/blob/main/src/main/resources/config.yml#L93-L114))
   - Supports many different permissions plugins. (LuckPerms, PermissionsEx, bPermissions, GroupManager)
 - Many configurable hooks which provide support to other plugins.
    - Essentials
