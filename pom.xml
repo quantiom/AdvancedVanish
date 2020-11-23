@@ -158,6 +158,7 @@
             <groupId>dev.esophose</groupId>
             <artifactId>playerparticles</artifactId>
             <version>7.4</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
