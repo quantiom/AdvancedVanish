@@ -51,14 +51,13 @@ Add this repository to your `pom.xml`:
 </repository>  
 ```
 
-Add the dependency and replace `$VERSION$` with the current version:
+Add the dependency and replace `<version>...</version>` with the current version:
 ```xml
 <dependency>
   <groupId>com.github.quantiom</groupId>
-  <artifactId>advancedvanish</artifactId>
-  <version>$VERSION$</version>
-  <scope>provided</scope>
-</dependency>  
+  <artifactId>AdvancedVanish</artifactId>
+  <version>v1.0.1</version>
+</dependency>
 ```
 
 ### Methods
