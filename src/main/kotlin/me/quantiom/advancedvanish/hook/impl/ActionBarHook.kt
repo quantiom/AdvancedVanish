@@ -6,7 +6,7 @@ import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.event.PlayerUnVanishEvent
 import me.quantiom.advancedvanish.event.PlayerVanishEvent
 import me.quantiom.advancedvanish.hook.IHook
-import me.quantiom.advancedvanish.util.VanishUtil
+import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.color
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -19,7 +19,7 @@ class ActionBarHook : IHook {
             override fun run() {
                 if (!Bukkit.getPluginManager().isPluginEnabled("ActionBarAPI")) return
 
-                VanishUtil.vanishedPlayers.map(Bukkit::getPlayer).forEach(::sendActionBar)
+                AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).forEach(::sendActionBar)
             }
         }
 

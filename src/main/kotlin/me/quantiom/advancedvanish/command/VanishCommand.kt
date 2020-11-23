@@ -9,7 +9,7 @@ import co.aikar.commands.bukkit.contexts.OnlinePlayer
 import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.permission.PermissionsManager
-import me.quantiom.advancedvanish.util.VanishUtil
+import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.color
 import me.quantiom.advancedvanish.util.isVanished
 import me.quantiom.advancedvanish.util.sendConfigMessage
@@ -36,10 +36,10 @@ object VanishCommand : BaseCommand() {
         if (!permissionCheck(player, "permissions.vanish", "advancedvanish.vanish")) return
 
         if (player.isVanished()) {
-            VanishUtil.unVanishPlayer(player)
+            AdvancedVanishAPI.unVanishPlayer(player)
             player.sendConfigMessage("vanish-off")
         } else {
-            VanishUtil.vanishPlayer(player)
+            AdvancedVanishAPI.vanishPlayer(player)
             player.sendConfigMessage("vanish-on")
         }
     }
@@ -69,7 +69,7 @@ object VanishCommand : BaseCommand() {
     private fun onListCommand(player: Player) {
         if (!permissionCheck(player, "permissions.list-command", "advancedvanish.list-command")) return
 
-        val players = VanishUtil.vanishedPlayers.map(Bukkit::getPlayer).joinToString(", ", transform = Player::getName)
+        val players = AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).joinToString(", ", transform = Player::getName)
 
         player.sendConfigMessage("vanished-list", "%vanished-players%" to if (players.isEmpty()) "None" else players)
     }

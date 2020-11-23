@@ -3,7 +3,7 @@ package me.quantiom.advancedvanish.hook.impl
 import dev.esophose.playerparticles.api.PlayerParticlesAPI
 import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.hook.IHook
-import me.quantiom.advancedvanish.util.VanishUtil
+import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import org.bukkit.scheduler.BukkitRunnable
 
 class PlayerParticlesHook : IHook {
@@ -12,7 +12,7 @@ class PlayerParticlesHook : IHook {
     private val updateTask: BukkitRunnable =
         object : BukkitRunnable() {
             override fun run() {
-                VanishUtil.vanishedPlayers
+                AdvancedVanishAPI.vanishedPlayers
                     .mapNotNull { PlayerParticlesAPI.getInstance().getPPlayer(it) }
                     .forEach { it.activeParticles.clear() }
             }

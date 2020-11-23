@@ -7,7 +7,7 @@ import com.comphenix.protocol.events.PacketEvent
 import com.comphenix.protocol.wrappers.WrappedServerPing
 import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.hook.IHook
-import me.quantiom.advancedvanish.util.VanishUtil
+import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 
 class ServerListHook : IHook {
     private val packetListener = object : PacketAdapter(
@@ -19,8 +19,8 @@ class ServerListHook : IHook {
         override fun onPacketSending(event: PacketEvent?) {
             val ping = event!!.packet.serverPings.read(0) as WrappedServerPing
 
-            ping.playersOnline -= VanishUtil.vanishedPlayers.size
-            ping.setPlayers(ping.players.filter { VanishUtil.vanishedPlayers.find { vUUID -> vUUID == it.uuid } == null })
+            ping.playersOnline -= AdvancedVanishAPI.vanishedPlayers.size
+            ping.setPlayers(ping.players.filter { AdvancedVanishAPI.vanishedPlayers.find { vUUID -> vUUID == it.uuid } == null })
         }
     }
 

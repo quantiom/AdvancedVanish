@@ -12,11 +12,18 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.*
 
-fun Player.isVanished() = VanishUtil.isPlayerVanished(this)
+fun Player.isVanished() = AdvancedVanishAPI.isPlayerVanished(this)
 
-object VanishUtil {
+object AdvancedVanishAPI {
     val vanishedPlayers: MutableList<UUID> = Lists.newArrayList()
 
+    /**
+     * Vanishes a player if the PrePlayerVanishEvent
+     * does not get cancelled.
+     *
+     * @param player The player to vanish
+     * @param onJoin If this is being called from the PlayerJoinEvent, used for hook/fake join and leave message functionality
+     */
     fun vanishPlayer(player: Player, onJoin: Boolean = false) {
         val prePlayerVanishEvent = PrePlayerVanishEvent(player)
         Bukkit.getPluginManager().callEvent(prePlayerVanishEvent)
@@ -69,7 +76,13 @@ object VanishUtil {
         Bukkit.getPluginManager().callEvent(PlayerVanishEvent(player))
     }
 
-    fun unVanishPlayer(player: Player) = this.unVanishPlayer(player, false)
+    /**
+     * Vanishes a player if the PrePlayerUnVanishEvent
+     * does not get cancelled.
+     *
+     * @param player The player to unvanish
+     * @param onLeave If this is being called from the PlayerQuitEvent, used for hook/fake join and leave message functionality
+     */
     fun unVanishPlayer(player: Player, onLeave: Boolean = false) {
         val prePlayerUnVanishEvent = PrePlayerUnVanishEvent(player)
         Bukkit.getPluginManager().callEvent(prePlayerUnVanishEvent)
@@ -114,8 +127,19 @@ object VanishUtil {
         }
     }
 
+    /**
+     * Checks if a player is vanished
+     *
+     * @param player The player to check if vanished
+     */
     fun isPlayerVanished(player: Player): Boolean = this.vanishedPlayers.contains(player.uniqueId)
 
+    /**
+     * Returns true if `player` can see `target`
+     *
+     * @param player
+     * @param target
+     */
     fun canSee(player: Player, target: Player): Boolean {
         if (!target.isVanished()) return false
 

@@ -1,7 +1,7 @@
 package me.quantiom.advancedvanish.listener
 
 import me.quantiom.advancedvanish.config.Config
-import me.quantiom.advancedvanish.util.VanishUtil
+import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.isVanished
 import me.quantiom.advancedvanish.util.sendConfigMessage
 import org.bukkit.Bukkit
@@ -30,12 +30,12 @@ object VanishListener : Listener {
         )
 
         if (player.hasPermission(vanishPermission) && Config.getValueOrDefault("vanish-on-join", false)) {
-            VanishUtil.vanishPlayer(player, true)
+            AdvancedVanishAPI.vanishPlayer(player, true)
             player.sendConfigMessage("vanish-on")
         }
 
         if (!player.hasPermission(vanishPermission)) {
-            VanishUtil.refreshVanished(player)
+            AdvancedVanishAPI.refreshVanished(player)
         }
 
         if (!Config.getValueOrDefault("when-vanished.join-messages", false)) {
@@ -46,7 +46,7 @@ object VanishListener : Listener {
     @EventHandler
     private fun onDisconnect(event: PlayerQuitEvent) {
         if (event.player.isVanished()) {
-            VanishUtil.unVanishPlayer(event.player, true)
+            AdvancedVanishAPI.unVanishPlayer(event.player, true)
         }
 
         if (!Config.getValueOrDefault("when-vanished.leave-messages", false)) {

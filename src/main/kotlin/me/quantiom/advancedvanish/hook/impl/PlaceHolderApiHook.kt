@@ -4,7 +4,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion
 import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.hook.IHook
-import me.quantiom.advancedvanish.util.VanishUtil
+import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.isVanished
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -25,11 +25,11 @@ class PlaceHolderApiHook : IHook {
             return when (params.toLowerCase()) {
                 isVanishedPlaceholder -> if (player.isVanished()) "Yes" else "No"
                 vanishedPlayersPlaceholder -> {
-                    val players = VanishUtil.vanishedPlayers.map(Bukkit::getPlayer).joinToString(", ", transform = Player::getName)
+                    val players = AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).joinToString(", ", transform = Player::getName)
 
                     if (players.isEmpty()) "None" else players
                 }
-                playerCountPlaceholder -> (Bukkit.getOnlinePlayers().size - VanishUtil.vanishedPlayers.size).toString()
+                playerCountPlaceholder -> (Bukkit.getOnlinePlayers().size - AdvancedVanishAPI.vanishedPlayers.size).toString()
                 else -> null
             }
         }
