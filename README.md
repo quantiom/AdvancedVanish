@@ -1,5 +1,6 @@
 # AdvancedVanish
 ![license](https://img.shields.io/github/license/quantiom/EventHandler?color=%23b59e28&style=for-the-badge) ![made-with-kotlin](https://img.shields.io/badge/MADE%20WITH-KOTLIN-%23b59e28?style=for-the-badge&logo=java)  ![last-commit](https://img.shields.io/github/last-commit/quantiom/AdvancedVanish?color=%23b59e28&style=for-the-badge)  
+
 AdvancedVanish is a fully customizable and advanced vanish plugin made in Kotlin.
 
 ## Features
@@ -30,7 +31,26 @@ AdvancedVanish is a fully customizable and advanced vanish plugin made in Kotlin
 
 ## API
 Before utilizing the API, make sure that the `AdvancedVanish` plugin is
-enabled, or add `depend: [AdvancedVanish]` to your plugin's `plugin.yml`.
+enabled, or add `depend: [AdvancedVanish]` or `softdepend: [AdvancedVanish]` to 
+your plugin's `plugin.yml`.
+
+### Maven
+Add this repository to your `pom.xml`:
+```xml
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>  
+```
+
+Add the dependency and replace `$VERSION$` with the current version:
+```xml
+<dependency>
+   <groupId>com.github.quantiom</groupId>
+   <artifactId>advancedvanish</artifactId>
+   <version>$VERSION$</version>
+</dependency>  
+```
 
 ### Methods
 ```kotlin
@@ -48,3 +68,26 @@ Player.isVanished(): Boolean
 - `PlayerVanishEvent` - Gets called after a player vanishes.
 - `PrePlayerUnVanishEvent` - Gets called before a player unvanishes, imeplements `Cancellable`.
 - `PlayerUnVanishEvent` - Gets called after a player unvanishes.
+### Example Usage
+```kotlin
+class ExamplePlugin : JavaPlugin(), Listener {
+    override fun onEnable() {
+        this.server.pluginManager.registerEvents(this, this)
+    }
+
+    @EventHandler
+    private fun onVanish(event: PlayerVanishEvent) {
+        val vanishedPlayers = AdvancedVanishAPI.vanishedPlayers
+            .map(Bukkit::getPlayer)
+            .joinToString(", ", transform = Player::getName)
+
+        this.logger.log(Level.INFO, "${event.player.name} has entered vanish.")
+        this.logger.log(Level.INFO, "Current vanished players: ${vanishedPlayers}.")
+    }
+
+    @EventHandler
+    private fun onUnVanish(event: PrePlayerUnVanishEvent) {
+        event.isCancelled = true // Don't let players unvanish
+    }
+}
+```
