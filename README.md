@@ -46,17 +46,18 @@ your plugin's `plugin.yml`.
 Add this repository to your `pom.xml`:
 ```xml
 <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
+  <id>jitpack.io</id>
+  <url>https://jitpack.io</url>
 </repository>  
 ```
 
 Add the dependency and replace `$VERSION$` with the current version:
 ```xml
 <dependency>
-   <groupId>com.github.quantiom</groupId>
-   <artifactId>advancedvanish</artifactId>
-   <version>$VERSION$</version>
+  <groupId>com.github.quantiom</groupId>
+  <artifactId>advancedvanish</artifactId>
+  <version>$VERSION$</version>
+  <scope>provided</scope>
 </dependency>  
 ```
 
