@@ -1,7 +1,7 @@
 # AdvancedVanish
 ![license](https://img.shields.io/github/license/quantiom/EventHandler?color=%23b59e28&style=for-the-badge) ![made-with-kotlin](https://img.shields.io/badge/MADE%20WITH-KOTLIN-%23b59e28?style=for-the-badge&logo=java)  ![last-commit](https://img.shields.io/github/last-commit/quantiom/AdvancedVanish?color=%23b59e28&style=for-the-badge)  
 
-AdvancedVanish is a fully customizable and advanced vanish plugin made in Kotlin.
+AdvancedVanish is a fully customizable and advanced vanish plugin made with Kotlin.
 
 ## Features
 - Fully customizable through the [config](src/main/resources/config.yml). (70+ options)
@@ -12,7 +12,7 @@ AdvancedVanish is a fully customizable and advanced vanish plugin made in Kotlin
   - Placeholders
   - Much more...
 - Vanished players are **completely** invisible, as if they are not even online.
-- Vanish priorities/levels ([more info](https://github.com/quantiom/AdvancedVanish/blob/main/src/main/resources/config.yml#L93-L117))
+- Vanish priorities/levels ([more info](https://github.com/quantiom/AdvancedVanish/blob/main/src/main/resources/config.yml#L93-L114))
   - Supports many different permissions plugins. (LuckPerms, PermissionsEx, bPermissions, GroupManager)
 - Many configurable hooks which provide support to other plugins.
    - Essentials
@@ -51,14 +51,13 @@ Add this repository to your `pom.xml`:
 </repository>  
 ```
 
-Add the dependency and replace `$VERSION$` with the current version:
+Add the dependency and replace `<version>...</version>` with the current version:
 ```xml
 <dependency>
   <groupId>com.github.quantiom</groupId>
-  <artifactId>advancedvanish</artifactId>
-  <version>$VERSION$</version>
-  <scope>provided</scope>
-</dependency>  
+  <artifactId>AdvancedVanish</artifactId>
+  <version>v1.0.1</version>
+</dependency>
 ```
 
 ### Methods
