@@ -29,6 +29,14 @@ AdvancedVanish is a fully customizable and advanced vanish plugin made in Kotlin
   - `/vanish status <player>` *- Check if a player is in vanish*
 - For the rest of the features, check out the [config](src/main/resources/config.yml).
 
+## Hooks
+In AdvancedVanish, there are many hooks which provide support to other plugins.  
+A full list of hooks with their descriptions can be found in the [config](src/main/resources/config.yml).  
+
+## Vanish Priority
+An explanation and guide of how to use vanish priorities can be found in the [config](src/main/resources/config.yml).  
+*Note: Requires a supported permissions plugin to function*
+
 ## API
 Before utilizing the API, make sure that the `AdvancedVanish` plugin is
 enabled, or add `depend: [AdvancedVanish]` or `softdepend: [AdvancedVanish]` to 
