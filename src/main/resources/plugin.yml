@@ -3,7 +3,6 @@ description: ${project.description}
 author: quantiom
 version: ${project.version}
 main: ${project.groupId}.${project.artifactId}.${project.name}
-depend: [Kotlin]
 softdepend: [LuckPerms, PlaceholderAPI, GroupManager, PermissionsEx, bPermissions, DiscordSRV, Dynmap, LibsDisguises, PlayerParticles, Essentials, PlaceholderAPI, ProtocolLib]
 commands:
   vanish:
