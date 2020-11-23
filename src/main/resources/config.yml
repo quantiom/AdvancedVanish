@@ -98,7 +98,6 @@ placeholders:
 #
 # Supported permissions plugins:
 #   - LuckPerms (recommended)
-#   - PermissionsEx
 #   - bPermissions
 #   - GroupManager
 #
@@ -107,8 +106,6 @@ placeholders:
 #     (ex: /lp user quantiom meta set advancedvanish-priority 5)
 #   bPermissions: (/user OR /group) meta <meta-key> <priority-num>
 #     (ex: /user meta advancedvanish-priority 5)
-#   PermissionsEx: /pex user/group <user|group> set <meta-key> <priority-num>
-#     (ex: /pex user quantiom set advancedvanish-priority 5)
 #   GroupManager: Add the permission <meta-key>.<priority-num>, and AdvancedVanish will use the highest number
 #     (ex: /manuaddp quantiom advancedvanish-priority.5)
 #

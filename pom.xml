@@ -107,17 +107,17 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.bananaco</groupId>
-            <artifactId>bPermissions</artifactId>
-            <version>2.12.3</version>
+            <groupId>com.github.rymate1234.bPermissions</groupId>
+            <artifactId>bPermissions-API</artifactId>
+            <version>56f35c93b5</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>ru.tehkode</groupId>
             <artifactId>PermissionsEx</artifactId>
             <version>1.23.4</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.github.ElgarL</groupId>
             <artifactId>groupmanager</artifactId>
@@ -131,9 +131,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.connorlinfoot</groupId>
+            <groupId>com.github.ConnorLinfoot</groupId>
             <artifactId>ActionBarAPI</artifactId>
-            <version>1.5.4</version>
+            <version>5b2d642d3d</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
