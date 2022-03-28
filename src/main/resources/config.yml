@@ -40,6 +40,8 @@ permissions:
   priority-command: "advancedvanish.priority-command"
   list-command: "advancedvanish.list-command"
   status-command: "advancedvanish.status-command"
+  toggle-other-command: "advancedvanish.toggle-other-command"
+  set-other-command: "advancedvanish.set-other-command"
   keep-fly-on-unvanish: "advancedvanish.keep-fly"
 
 # Fake join/leave messages
@@ -146,9 +148,20 @@ messages:
   vanished-list: "Vanished players: &c%vanished-players%"
   # Placeholders:
   #   %target-name% - The target's username
-  #   %vanish-status% - "On" or "Off"
+  #   %vanish-status% - "on" or "off"
   #   %vanish-status-word% - "vanished" or "not vanished"
   vanish-status-command: "&c%target-name%&f is currently &c%vanish-status-word%&f."
+  # Placeholders:
+  #   %target-name% - The target's username
+  #   %vanish-status% - "on" or "off"
+  #   %vanish-status-word% - "vanished" or "not vanished"
+  # This message is also used with the toggle command
+  vanish-set-other-command: "&fSet &c%target-name%'s&f vanish to &c%vanish-status%&f."
+  # Placeholders:
+  #   %target-name% - The target's username
+  #   %vanish-status% - "on" or "off"
+  #   %vanish-status-word% - "vanished" or "not vanished"
+  vanish-set-other-command-already: "&c%target-name%&f is already &c%vanish-status-word%"
   action-bar: "&cYou are in vanish."
   disguise-removed-because-vanish: "Your disguise has been &cremoved&f because you are in vanish"
 

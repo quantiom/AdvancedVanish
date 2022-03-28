@@ -26,6 +26,8 @@ object VanishCommand : BaseCommand() {
         "&c/vanish priority &8- &fDisplays your vanish priority.",
         "&c/vanish list &8- &fDisplays a list of vanished players.",
         "&c/vanish status <player> &8- &fCheck if a player is in vanish.",
+        "&c/vanish set <player> <on/off> &8- &fSet another player's vanish.",
+        "&c/vanish toggle <player> &8- &fToggle another player's vanish.",
         "&c&m-----------------------------------",
         ""
     )
@@ -85,12 +87,71 @@ object VanishCommand : BaseCommand() {
     @Subcommand("status")
     @Syntax("<player>")
     @CommandCompletion("@players")
-    private fun onStatusCommand(player: Player, target: OnlinePlayer) {
-        if (!permissionCheck(player, "permissions.status-command", "advancedvanish.status-command")) return
+    private fun onStatusCommand(sender: CommandSender, target: OnlinePlayer) {
+        if (!permissionCheck(sender, "permissions.status-command", "advancedvanish.status-command")) return
 
-        player.sendConfigMessage("vanish-status-command",
+        sender.sendConfigMessage("vanish-status-command",
             "%target-name%" to target.player.name,
-            "%vanish-status%" to if (target.player.isVanished()) "On" else "Off",
+            "%vanish-status%" to if (target.player.isVanished()) "on" else "off",
+            "%vanish-status-word%" to if (target.player.isVanished()) "vanished" else "not vanished"
+        )
+    }
+
+    @Subcommand("set")
+    @Syntax("<player> <on/off>")
+    @CommandCompletion("@players")
+    private fun onSetCommand(sender: CommandSender, target: OnlinePlayer, status: String) {
+        if (!permissionCheck(sender, "permissions.set-other-command", "advancedvanish.set-other-command")) return
+
+        val toChange = status.toLowerCase() == "on" || status.toLowerCase() == "true"
+        var sendAlready = false
+
+        println(toChange)
+
+        if (target.player.isVanished()) {
+            if (toChange) {
+                sendAlready = true
+            } else {
+                AdvancedVanishAPI.unVanishPlayer(target.player)
+            }
+        } else {
+            if (!toChange) {
+                sendAlready = true
+            } else {
+                AdvancedVanishAPI.vanishPlayer(target.player)
+            }
+        }
+
+        if (sendAlready) {
+            sender.sendConfigMessage("vanish-set-other-command-already",
+                "%target-name%" to target.player.name,
+                "%vanish-status%" to if (target.player.isVanished()) "on" else "off",
+                "%vanish-status-word%" to if (target.player.isVanished()) "vanished" else "not vanished"
+            )
+        } else {
+            sender.sendConfigMessage("vanish-set-other-command",
+                "%target-name%" to target.player.name,
+                "%vanish-status%" to if (target.player.isVanished()) "on" else "off",
+                "%vanish-status-word%" to if (target.player.isVanished()) "vanished" else "not vanished"
+            )
+        }
+    }
+
+    @Subcommand("toggle")
+    @Syntax("<player>")
+    @CommandCompletion("@players")
+    private fun onToggleCommand(sender: CommandSender, target: OnlinePlayer) {
+        if (!permissionCheck(sender, "permissions.toggle-other-command", "advancedvanish.toggle-other-command")) return
+
+        if (target.player.isVanished()) {
+            AdvancedVanishAPI.unVanishPlayer(target.player)
+        } else {
+            AdvancedVanishAPI.vanishPlayer(target.player)
+        }
+
+        sender.sendConfigMessage("vanish-set-other-command",
+            "%target-name%" to target.player.name,
+            "%vanish-status%" to if (target.player.isVanished()) "on" else "off",
             "%vanish-status-word%" to if (target.player.isVanished()) "vanished" else "not vanished"
         )
     }
