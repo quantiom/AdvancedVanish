@@ -19,7 +19,7 @@ class PlayerParticlesHook : IHook {
         }
 
     override fun onEnable() {
-        this.updateTask.runTaskTimer(AdvancedVanish.instance, 0L, 20L)
+        this.updateTask.runTaskTimer(AdvancedVanish.instance!!, 0L, 20L)
     }
 
     override fun onDisable() {

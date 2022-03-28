@@ -10,15 +10,15 @@ import org.dynmap.DynmapAPI
 class DynmapHook : IHook {
     override fun getID() = "Dynmap"
 
-    private val dynmap: DynmapAPI? = Bukkit.getPluginManager().getPlugin("Dynmap") as DynmapAPI
+    private val dynmap: DynmapAPI = Bukkit.getPluginManager().getPlugin("Dynmap") as DynmapAPI
 
     @EventHandler
     private fun onVanish(event: PlayerVanishEvent) {
-        this.dynmap?.setPlayerVisiblity(event.player, false)
+        this.dynmap.setPlayerVisiblity(event.player, false)
     }
 
     @EventHandler
     private fun onUnVanish(event: PlayerUnVanishEvent) {
-        this.dynmap?.setPlayerVisiblity(event.player, true)
+        this.dynmap.setPlayerVisiblity(event.player, true)
     }
 }

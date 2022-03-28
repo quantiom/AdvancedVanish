@@ -23,7 +23,7 @@ object HooksManager {
         this.addHook("playerparticles", "PlayerParticles", "PlayerParticles", ::PlayerParticlesHook)
 
         this.hooks.forEach {
-            Bukkit.getServer().pluginManager.registerEvents(it, AdvancedVanish.instance)
+            Bukkit.getServer().pluginManager.registerEvents(it, AdvancedVanish.instance!!)
             it.onEnable()
         }
     }
@@ -49,7 +49,7 @@ object HooksManager {
 
     private fun <T> addHook(configOption: String, dependencyName: String, hookName: String, instanciator: () -> (T)) {
         if (Config.getValueOrDefault("hooks.$configOption", false)) {
-            if (!Bukkit.getPluginManager().isPluginEnabled(dependencyName)) {
+            if (!Bukkit.getPluginManager().isPluginEnabled(dependencyName) && dependencyName != "ActionBarAPI") {
                 AdvancedVanish.log(Level.INFO, "$dependencyName not found, not using the $hookName hook.")
             } else {
                 AdvancedVanish.log(Level.INFO, "Using $hookName hook.")

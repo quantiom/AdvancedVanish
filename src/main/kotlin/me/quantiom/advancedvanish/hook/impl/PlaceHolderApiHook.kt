@@ -25,7 +25,7 @@ class PlaceHolderApiHook : IHook {
             return when (params.toLowerCase()) {
                 isVanishedPlaceholder -> if (player.isVanished()) "Yes" else "No"
                 vanishedPlayersPlaceholder -> {
-                    val players = AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).joinToString(", ", transform = Player::getName)
+                    val players = AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).map { it!! }.joinToString(", ", transform = Player::getName)
 
                     if (players.isEmpty()) "None" else players
                 }
