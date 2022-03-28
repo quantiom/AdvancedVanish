@@ -24,20 +24,20 @@ class AdvancedVanish : JavaPlugin() {
     override fun onEnable() {
         instance = this
 
-        this.saveDefaultConfig().also { Config.reload() }
-        this.server.pluginManager.registerEvents(VanishListener, this)
-
-        PermissionsManager.setupPermissionsHandler()
-        HooksManager.setupHooks()
-
         commandManager = PaperCommandManager(this).also {
             it.enableUnstableAPI("help")
             it.registerCommand(VanishCommand, true)
         }
+
+        Config.reload()
+        this.server.pluginManager.registerEvents(VanishListener, this)
+
+        PermissionsManager.setupPermissionsHandler()
+        HooksManager.setupHooks()
     }
 
     override fun onDisable() {
-        AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).forEach { AdvancedVanishAPI.unVanishPlayer(it) }
+        AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).forEach { AdvancedVanishAPI.unVanishPlayer(it!!) }
         HooksManager.disableHooks()
         commandManager?.unregisterCommand(VanishCommand)
     }

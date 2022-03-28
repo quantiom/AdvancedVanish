@@ -5,13 +5,13 @@
 #  / ____ \ (_| |\ V / (_| | | | | (_|  __/ (_| |  \  / (_| | | | | \__ \ | | |   #
 # /_/    \_\__,_| \_/ \__,_|_| |_|\___\___|\__,_|   \/ \__,_|_| |_|_|___/_| |_|   #
 ###################################################################################
-# Version ${project.version} by quantiom
+# Made by quantiom
 
 # Enable vanish on join
 vanish-on-join: true
 
 # Actions when players are vanished
-# false = disabled, true = enabled
+# true = enabled, false = disabled
 when-vanished:
   join-messages: false
   leave-messages: false
@@ -34,6 +34,7 @@ when-vanished:
 # Permissions
 permissions:
   vanish: "advancedvanish.vanish"
+  version-command: "advancedvanish.version-command"
   help-command: "advancedvanish.help-command"
   reload-config-command: "advancedvanish.reload-config-command"
   priority-command: "advancedvanish.priority-command"
@@ -64,8 +65,9 @@ hooks:
   # Requires PlaceholderAPI, adds multiple placeholders which are configurable
   # in the placeholders section of this config
   placeholders: true
-  # Requires ActionBarAPI, shows a message above the hotbar if a player is vanished
+  # Shows a message above the hotbar if a player is vanished
   # The configurable message is in the messages section below.
+  # Does NOT require ActionBarAPI if you are running 1.16+
   actionbar: true
   # Requires DiscordSRV, sends a fake leave and join message when vanished/unvanished
   # and also requires the fake-join-message-on-unvanish / fake-leave-message-on-vanish to be
@@ -122,6 +124,9 @@ messages:
     value: "&c[AdvancedVanish]&f "
   no-permission: "&cYou do not have permission to use this command."
   config-reloaded: "Successfully reloaded the config."
+  # Placeholders:
+  #   %version% - The plugin version
+  version-command: "This server is running AdvancedVanish &c%version%&f by quantiom"
   vanish-on: "You are now in vanish."
   vanish-off: "You are no longer in vanish."
   cannot-chat-while-vanished: "You cannot chat while you are in vanish."
@@ -129,7 +134,9 @@ messages:
   cannot-break-blocks-while-vanished: "You cannot break blocks while you are in vanish."
   cannot-attack-entities-while-vanished: "You cannot attack entities while you are in vanish."
   cannot-drop-items-while-vanished: "You cannot drop items while you are in vanish."
-  opening-chest-silently: "Opening chest silently..."
+  # Placeholders:
+  #   %type% - The container type
+  opening-container-silently: "Opening %type% silently..."
   # Placeholders:
   #   %priority% - The player's vanish priority
   vanish-priority: "Your vanish priority is &c%priority%&f."
@@ -145,5 +152,22 @@ messages:
   action-bar: "&cYou are in vanish."
   disguise-removed-because-vanish: "Your disguise has been &cremoved&f because you are in vanish"
 
+# Messages from the command handler
+command-handler-messages:
+  # Will use the prefix from the message section above before all of these messages
+  use-prefix: true
+  unknown-command: "&cInvalid arguments."
+  # Placeholders:
+  #   %command%
+  #   %syntax%
+  invalid-syntax: "&cUsage: %command% %syntax%"
+  error-performing-command: "&cThere was an error performing this command."
+  # Placeholders:
+  #   %search% - The given player name
+  could-not-find-player: "&cCouldn't find a player by the name of %search%."
+  # Placeholders:
+  #   %error% - The error message
+  generic-error: "&cError: %error%"
+
 # Config version - Do NOT change this manually
-config-version: 1
+config-version: 2

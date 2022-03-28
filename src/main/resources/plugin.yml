@@ -4,6 +4,7 @@ author: quantiom
 version: ${project.version}
 main: ${project.groupId}.${project.artifactId}.${project.name}
 softdepend: [LuckPerms, PlaceholderAPI, GroupManager, PermissionsEx, bPermissions, DiscordSRV, Dynmap, LibsDisguises, PlayerParticles, Essentials, PlaceholderAPI, ProtocolLib]
+api-version: 1.13
 commands:
   vanish:
     description: The main vanish command.

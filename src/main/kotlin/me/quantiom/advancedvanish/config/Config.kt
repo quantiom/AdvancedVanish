@@ -1,5 +1,8 @@
 package me.quantiom.advancedvanish.config
 
+import co.aikar.commands.Locales
+import co.aikar.commands.MessageKeys
+import co.aikar.locales.MessageKeyProvider
 import com.google.common.collect.Maps
 import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.util.applyPlaceholders
@@ -15,7 +18,7 @@ object Config {
     var savedConfig: FileConfiguration? = null
     var usingPriorities = false
 
-    private const val CONFIG_VERSION = 1
+    private const val CONFIG_VERSION = 2
     private var messages: MutableMap<String, List<String>> = Maps.newHashMap()
 
     fun reload() {
@@ -45,6 +48,7 @@ object Config {
         }
 
         this.reloadMessages()
+        this.reloadCommandHandlerMessages();
         this.usingPriorities = this.getValueOrDefault("priority.enable", false)
     }
 
@@ -108,11 +112,48 @@ object Config {
         this.savedConfig?.getConfigurationSection("messages")?.let {
             it.getKeys(false).forEach { key ->
                 if (it.isString(key)) {
-                    messages[key] = listOf(it.getString(key)).map(String::color)
+                    messages[key] = listOf(it.getString(key)!!).map(String::color)
                 } else if (it.isList(key)) {
-                    messages[key] = it.getList(key).filterIsInstance<String>().map(String::color)
+                    messages[key] = it.getList(key)!!.filterIsInstance<String>().map(String::color)
                 }
             }
         }
+    }
+
+    private fun reloadCommandHandlerMessages() {
+        val commandHandlerMessages: MutableMap<String, String> = Maps.newHashMap()
+
+        this.savedConfig?.getConfigurationSection("command-handler-messages")?.let {
+            it.getKeys(false).forEach { key ->
+                if (it.isString(key)) {
+                    commandHandlerMessages[key] = it.getString(key)!!.color()
+                }
+            }
+        }
+
+        val prefix = if (this.savedConfig?.getConfigurationSection("command-handler-messages")?.getBoolean("use-prefix")!!) {
+            this.getValueOrDefault("messages.prefix.value", "&c[AdvancedVanish]&f ").color()
+        } else {
+            ""
+        }
+
+        val getOrDefault: (String, String) -> String = { key, default ->
+            prefix + if (commandHandlerMessages.containsKey(key)) commandHandlerMessages[key]!!.color() else default.color()
+        }
+
+        val messages: MutableMap<MessageKeyProvider, String> = Maps.newHashMap()
+        messages[MessageKeys.UNKNOWN_COMMAND] = getOrDefault("unknown-command", "Invalid arguments.")
+        messages[MessageKeys.INVALID_SYNTAX] = getOrDefault("invalid-syntax", "Usage: %command% %syntax%").applyPlaceholders(
+            "%command%" to "{command}",
+            "%syntax%" to "{syntax}"
+        )
+        messages[MessageKeys.ERROR_PERFORMING_COMMAND] = getOrDefault("error-performing-command", "There was an error performing this command.")
+        messages[MessageKeys.COULD_NOT_FIND_PLAYER] = getOrDefault("could-not-find-player", "Couldn't find a player by the name of &c%search%&f.").applyPlaceholders(
+            "%search%" to "{search}"
+        )
+        messages[MessageKeys.ERROR_PREFIX] = getOrDefault("generic-error", "Error: &c%error%").applyPlaceholders(
+            "%error%" to "{message}"
+        )
+        AdvancedVanish.commandManager!!.locales.addMessages(Locales.ENGLISH, messages)
     }
 }

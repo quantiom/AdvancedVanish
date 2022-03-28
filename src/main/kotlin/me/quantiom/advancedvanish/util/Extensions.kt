@@ -21,6 +21,5 @@ fun List<String>.applyPlaceholders(vararg pairs: Pair<String, String>): List<Str
 fun String.color(): String = ChatColor.translateAlternateColorCodes('&', this)
 
 fun CommandSender.sendConfigMessage(key: String) = Config.sendMessage(this, key)
-fun Player.sendConfigMessage(key: String) = Config.sendMessage(player, key)
-fun Player.sendConfigMessage(key: String, vararg pairs: Pair<String, String>) = Config.sendMessage(player, key, *pairs)
+fun CommandSender.sendConfigMessage(key: String, vararg pairs: Pair<String, String>) = Config.sendMessage(this, key, *pairs)
 fun Player.sendColoredMessage(msg: String) = this.sendMessage(msg.color())

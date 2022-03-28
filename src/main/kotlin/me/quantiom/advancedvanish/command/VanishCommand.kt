@@ -1,11 +1,9 @@
 package me.quantiom.advancedvanish.command
 
 import co.aikar.commands.BaseCommand
-import co.aikar.commands.annotation.CommandAlias
-import co.aikar.commands.annotation.Default
-import co.aikar.commands.annotation.HelpCommand
-import co.aikar.commands.annotation.Subcommand
+import co.aikar.commands.annotation.*
 import co.aikar.commands.bukkit.contexts.OnlinePlayer
+import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.permission.PermissionsManager
@@ -23,6 +21,7 @@ object VanishCommand : BaseCommand() {
         "",
         "&c&m----------&c&l AdvancedVanish &c&m----------",
         "&c/vanish &8- &fToggle vanish.",
+        "&c/vanish version &8- &fShows the version of the plugin.",
         "&c/vanish reload &8- &fReloads the config and hooks.",
         "&c/vanish priority &8- &fDisplays your vanish priority.",
         "&c/vanish list &8- &fDisplays a list of vanished players.",
@@ -42,6 +41,15 @@ object VanishCommand : BaseCommand() {
             AdvancedVanishAPI.vanishPlayer(player)
             player.sendConfigMessage("vanish-on")
         }
+    }
+
+    @Subcommand("version")
+    private fun onVersionCommand(sender: CommandSender) {
+        if (!permissionCheck(sender, "permissions.version-command", "advancedvanish.version-command")) return
+
+        sender.sendConfigMessage("version-command",
+            "%version%" to "v${AdvancedVanish.instance!!.description.version}"
+        )
     }
 
     @Subcommand("reloadconfig|reload")
@@ -69,12 +77,14 @@ object VanishCommand : BaseCommand() {
     private fun onListCommand(player: Player) {
         if (!permissionCheck(player, "permissions.list-command", "advancedvanish.list-command")) return
 
-        val players = AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).joinToString(", ", transform = Player::getName)
+        val players = AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).map { it!! }.joinToString(", ", transform = Player::getName)
 
         player.sendConfigMessage("vanished-list", "%vanished-players%" to if (players.isEmpty()) "None" else players)
     }
 
     @Subcommand("status")
+    @Syntax("<player>")
+    @CommandCompletion("@players")
     private fun onStatusCommand(player: Player, target: OnlinePlayer) {
         if (!permissionCheck(player, "permissions.status-command", "advancedvanish.status-command")) return
 

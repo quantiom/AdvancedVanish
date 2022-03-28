@@ -6,7 +6,10 @@ import me.quantiom.advancedvanish.util.isVanished
 import me.quantiom.advancedvanish.util.sendConfigMessage
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.block.Barrel
 import org.bukkit.block.Chest
+import org.bukkit.block.EnderChest
+import org.bukkit.block.ShulkerBox
 import org.bukkit.entity.Player
 import org.bukkit.event.Cancellable
 import org.bukkit.event.EventHandler
@@ -83,17 +86,46 @@ object VanishListener : Listener {
 
     @EventHandler
     private fun onInteract(event: PlayerInteractEvent) {
-        if (event.player.isVanished() && (event.clickedBlock?.type == Material.CHEST || event.clickedBlock?.type == Material.TRAPPED_CHEST) && event.action == Action.RIGHT_CLICK_BLOCK) {
-            if (!Config.getValueOrDefault(
-                    "when-vanished.open-and-use-chests",
-                    false
-                )) {
-                val chestInventory = (event.clickedBlock.state as Chest).inventory
-                val cloneInventory = Bukkit.createInventory(null, chestInventory.size, "AdvancedVanish Chest").also { it.contents = chestInventory.contents }
+        if (event.player.isVanished() && event.action == Action.RIGHT_CLICK_BLOCK) {
+            if (event.clickedBlock?.type == Material.CHEST || event.clickedBlock?.type == Material.TRAPPED_CHEST || event.clickedBlock?.type == Material.ENDER_CHEST || event.clickedBlock?.type!!.name.endsWith("SHULKER_BOX") || event.clickedBlock?.type!!.name == "BARREL") {
+                if (!Config.getValueOrDefault(
+                        "when-vanished.open-and-use-chests",
+                        false
+                    )
+                ) {
+                    val inventoryName: String
+                    val inventory = when (event.clickedBlock!!.type.name) {
+                        "CHEST", "TRAPPED_CHEST" -> {
+                            inventoryName = "Chest"
+                            (event.clickedBlock?.state as Chest).inventory
+                        }
+                        "BARREL" -> {
+                            inventoryName = "Barrel"
+                            (event.clickedBlock?.state as Barrel).inventory
+                        }
+                        "ENDER_CHEST" -> {
+                            inventoryName = "Enderchest"
+                            event.player.enderChest
+                        }
+                        else -> {
+                            inventoryName = "Shulker"
+                            (event.clickedBlock?.state as ShulkerBox).inventory
+                        }
+                    }
 
-                event.player.openInventory(cloneInventory)
-                event.player.sendConfigMessage("opening-chest-silently")
-                event.isCancelled = true
+                    if (inventoryName == "Enderchest") {
+                        event.player.openInventory(inventory)
+                    } else {
+                        val cloneInventory =
+                            Bukkit.createInventory(null, inventory.size, "AdvancedVanish $inventoryName")
+                                .also { it.contents = inventory.contents }
+
+                        event.player.openInventory(cloneInventory)
+                    }
+
+                    event.player.sendConfigMessage("opening-container-silently", "%type%" to inventoryName.toLowerCase())
+                    event.isCancelled = true
+                }
             }
         } else if (!event.hasBlock()) genericEventCancel(
             event,
@@ -105,7 +137,7 @@ object VanishListener : Listener {
 
     @EventHandler
     private fun onInventoryClick(event: InventoryClickEvent) {
-        if (event.inventory.title == "AdvancedVanish Chest") event.isCancelled = true
+        if (event.view.title.startsWith("AdvancedVanish ")) event.isCancelled = true
     }
 
     @EventHandler
