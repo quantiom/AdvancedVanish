@@ -52,7 +52,7 @@ object VanishCommand : BaseCommand() {
         )
     }
 
-    @Subcommand("reloadconfig|reload")
+    @Subcommand("reload|reloadconfig")
     private fun onReloadCommand(sender: CommandSender) {
         if (!permissionCheck(sender, "permissions.reload-config-command", "advancedvanish.reload-config-command")) return
 
