@@ -143,7 +143,7 @@ object VanishListener : Listener {
         if (event.target is Player) {
             genericEventCancel(
                 event,
-                event.entity as Player,
+                event.target as Player,
                 "when-vanished.mob-targeting",
                 ""
             )
