@@ -27,7 +27,9 @@ Spigot Resource: https://www.spigotmc.org/resources/advancedvanish.86036/
   - `/vanish reload` *- Reloads the config and hooks*
   - `/vanish priority` *- Displays your vanish priority.*
   - `/vanish list` *- Dispalys a list of vanished players.*
-  - `/vanish status <player>` *- Check if a player is in vanish*
+  - `/vanish status <player>` *- Check if a player is in vanish.*
+  - `/vanish set <player> <on/off>` *- Set another player's vanish.*
+  - `/vanish toggle <player>` *- Toggle another player's vanish.*
 - For the rest of the features, check out the [config](src/main/resources/config.yml).
 
 ## Hooks
