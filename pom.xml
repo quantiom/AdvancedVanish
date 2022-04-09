@@ -222,6 +222,10 @@
                             <pattern>co.aikar.locales</pattern>
                             <shadedPattern>me.quantiom.advancedvanish.locales</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>kotlin</pattern>
+                            <shadedPattern>me.quantiom.kotlin</shadedPattern>
+                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
