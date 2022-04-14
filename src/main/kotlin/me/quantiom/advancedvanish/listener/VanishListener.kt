@@ -127,7 +127,7 @@ object VanishListener : Listener {
                     event.isCancelled = true
                 }
             }
-        } else if (!event.hasBlock()) genericEventCancel(
+        } else genericEventCancel(
             event,
             event.player,
             "when-vanished.interact",
