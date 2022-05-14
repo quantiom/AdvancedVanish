@@ -24,7 +24,12 @@ when-vanished:
   open-and-use-chests: false
   pick-up-items: false
   drop-items: false
-  give-invisibility: true # Give an Invisibility II potion effect on vanish
+  # Find potion effect names here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html#INVISIBILITY
+  # Write each effect in this format: "NAME:AMPLIFIER"
+  # Example: "INVISIBILITY:2"
+  give-potion-effects:
+    - "INVISIBILITY:2"
+    - "NIGHT_VISION:1"
   lose-hunger: false
   mob-targeting: false
   fly:
@@ -183,4 +188,4 @@ command-handler-messages:
   generic-error: "&cError: %error%"
 
 # Config version - Do NOT change this manually
-config-version: 2
+config-version: 3

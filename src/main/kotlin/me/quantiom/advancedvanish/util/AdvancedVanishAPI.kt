@@ -1,9 +1,13 @@
 package me.quantiom.advancedvanish.util
 
 import com.google.common.collect.Lists
+import com.google.common.collect.Maps
 import github.scarsz.discordsrv.DiscordSRV
 import me.quantiom.advancedvanish.config.Config
-import me.quantiom.advancedvanish.event.*
+import me.quantiom.advancedvanish.event.PlayerUnVanishEvent
+import me.quantiom.advancedvanish.event.PlayerVanishEvent
+import me.quantiom.advancedvanish.event.PrePlayerUnVanishEvent
+import me.quantiom.advancedvanish.event.PrePlayerVanishEvent
 import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.permission.PermissionsManager
 import org.bukkit.Bukkit
@@ -16,6 +20,7 @@ fun Player.isVanished() = AdvancedVanishAPI.isPlayerVanished(this)
 
 object AdvancedVanishAPI {
     val vanishedPlayers: MutableList<UUID> = Lists.newArrayList()
+    private val storedPotionEffects: MutableMap<UUID, List<PotionEffect>> = Maps.newHashMap()
 
     /**
      * Vanishes a player if the PrePlayerVanishEvent
@@ -31,8 +36,30 @@ object AdvancedVanishAPI {
         if (prePlayerVanishEvent.isCancelled) return
 
         this.vanishedPlayers.add(player.uniqueId)
-        if (Config.getValueOrDefault("when-vanished.give-invisibility", false))
-            player.addPotionEffect(PotionEffect(PotionEffectType.INVISIBILITY, Int.MAX_VALUE, 1, false))
+
+        val previousEffects: MutableList<PotionEffect> = Lists.newArrayList();
+
+        // add potion effects
+        Config.getValueOrDefault("when-vanished.give-potion-effects", Lists.newArrayList<String>())
+            .map { it.split(":") }
+            .filter { it.size > 1 }
+            .forEach {
+                PotionEffectType.values().find { e -> e.name == it[0] }?.run {
+                    val currentPotionEffect = player.getPotionEffect(this)
+
+                    if (currentPotionEffect != null) {
+                        previousEffects.add(currentPotionEffect)
+                    } else {
+                        previousEffects.add(this.createEffect(0, 0))
+                    }
+
+                    player.addPotionEffect(this.createEffect(Integer.MAX_VALUE, it[1].toInt() - 1))
+                }
+            }
+
+        if (previousEffects.isNotEmpty()) {
+            this.storedPotionEffects[player.uniqueId] = previousEffects
+        }
 
         val usePriority = Config.usingPriorities && PermissionsManager.handler != null
         val playerPriority = PermissionsManager.handler?.getVanishPriority(player)
@@ -90,7 +117,18 @@ object AdvancedVanishAPI {
         if (prePlayerUnVanishEvent.isCancelled) return
 
         this.vanishedPlayers.remove(player.uniqueId)
-        player.removePotionEffect(PotionEffectType.INVISIBILITY)
+
+        this.storedPotionEffects[player.uniqueId]?.let {
+            for (potionEffect in it) {
+                player.removePotionEffect(potionEffect.type)
+
+                if (potionEffect.duration != 0) {
+                    player.addPotionEffect(potionEffect)
+                }
+            }
+
+            this.storedPotionEffects.remove(player.uniqueId)
+        }
 
         Bukkit.getOnlinePlayers()
             .forEach {
