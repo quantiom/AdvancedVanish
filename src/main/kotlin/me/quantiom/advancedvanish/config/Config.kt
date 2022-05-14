@@ -10,6 +10,7 @@ import me.quantiom.advancedvanish.util.color
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.FileConfiguration
+import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 import java.util.logging.Level
 
@@ -18,7 +19,7 @@ object Config {
     var savedConfig: FileConfiguration? = null
     var usingPriorities = false
 
-    private const val CONFIG_VERSION = 2
+    private const val CONFIG_VERSION = 3
     private var messages: MutableMap<String, List<String>> = Maps.newHashMap()
 
     fun reload() {
@@ -39,6 +40,20 @@ object Config {
                     it.copyTo(backupFile)
                     it.delete()
                     AdvancedVanish.instance!!.saveDefaultConfig()
+
+                    AdvancedVanish.instance!!.let { plugin ->
+                        plugin.reloadConfig()
+
+                        val oldYamlConfig = YamlConfiguration().also { config -> config.load(backupFile) }
+
+                        for (key in oldYamlConfig.getKeys(false)) {
+                            checkKeys(plugin.config, oldYamlConfig, key)
+                        }
+
+                        (plugin.config as YamlConfiguration).options().width(120)
+
+                        plugin.saveConfig()
+                    }
                 }
             }
 
@@ -50,6 +65,20 @@ object Config {
         this.reloadMessages()
         this.reloadCommandHandlerMessages();
         this.usingPriorities = this.getValueOrDefault("priority.enable", false)
+    }
+
+    private fun checkKeys(newYamlConfig: FileConfiguration, oldYamlConfig: YamlConfiguration, currKey: String) {
+        if (currKey == "config-version") return
+
+        if (oldYamlConfig.isConfigurationSection(currKey)) {
+            for (key in oldYamlConfig.getConfigurationSection(currKey)!!.getKeys(false)) {
+                checkKeys(newYamlConfig, oldYamlConfig, "${currKey}.${key}")
+            }
+        } else {
+            if (newYamlConfig.contains(currKey) && oldYamlConfig.contains(currKey) && newYamlConfig.get(currKey)!!::class == oldYamlConfig.get(currKey)!!::class) {
+                newYamlConfig.set(currKey, oldYamlConfig.get(currKey))
+            }
+        }
     }
 
     inline fun <reified T> getValue(key: String): T? {
