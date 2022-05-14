@@ -42,10 +42,9 @@ object VanishListener : Listener {
         }
 
         if (!Config.getValueOrDefault("when-vanished.join-messages", false)) {
-            if(AdvancedVanishAPI.isPlayerVanished(player)){
+            if (AdvancedVanishAPI.isPlayerVanished(player)) {
                 event.joinMessage = null
             }
-
         }
     }
 
@@ -56,8 +55,7 @@ object VanishListener : Listener {
         }
 
         if (!Config.getValueOrDefault("when-vanished.leave-messages", false)) {
-            if(AdvancedVanishAPI.isPlayerVanished(event.player)) {
-
+            if (AdvancedVanishAPI.isPlayerVanished(event.player)) {
                 event.quitMessage = null
             }
         }
