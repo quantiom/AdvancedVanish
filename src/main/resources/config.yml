@@ -82,6 +82,8 @@ hooks:
   discordsrv: true
   # Requires Dynmap, will hide vanished players from the website
   dynmap: true
+  # Requires squaremap, will hide vanished players from the website
+  squaremap: true
   # Requires LibsDisguises, removes disguises when vanished
   libsdisguises: true
   # Requires PlayerParticles, removes active particles when vanished
