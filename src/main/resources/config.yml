@@ -190,4 +190,4 @@ command-handler-messages:
   generic-error: "&cError: %error%"
 
 # Config version - Do NOT change this manually
-config-version: 3
+config-version: 4
