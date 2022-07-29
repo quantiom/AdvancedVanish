@@ -3,7 +3,7 @@ description: ${project.description}
 author: quantiom
 version: ${project.version}
 main: ${project.groupId}.${project.artifactId}.${project.name}
-softdepend: [LuckPerms, PlaceholderAPI, GroupManager, PermissionsEx, bPermissions, DiscordSRV, Dynmap, LibsDisguises, PlayerParticles, Essentials, PlaceholderAPI, ProtocolLib]
+softdepend: [LuckPerms, PlaceholderAPI, GroupManager, PermissionsEx, bPermissions, DiscordSRV, Dynmap, squaremap, LibsDisguises, PlayerParticles, Essentials, PlaceholderAPI, ProtocolLib]
 api-version: 1.13
 commands:
   vanish:

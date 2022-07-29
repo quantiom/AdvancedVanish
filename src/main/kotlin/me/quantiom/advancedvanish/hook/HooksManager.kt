@@ -19,6 +19,7 @@ object HooksManager {
         this.addHook("actionbar", "ActionBarAPI", "Action Bar", ::ActionBarHook)
         this.addHook("discordsrv", "DiscordSRV", "DiscordSRV", ::DiscordSrvHook)
         this.addHook("dynmap", "Dynmap", "Dynmap", ::DynmapHook)
+        this.addHook("squaremap", "squaremap", "squaremap", ::SquaremapHook)
         this.addHook("libsdisguises", "LibsDisguises", "LibsDisguises", ::LibsDisguisesHook)
         this.addHook("playerparticles", "PlayerParticles", "PlayerParticles", ::PlayerParticlesHook)
 
