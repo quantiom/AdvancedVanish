@@ -32,7 +32,12 @@ object VanishListener : Listener {
             "advancedvanish.vanish"
         )
 
-        if (player.hasPermission(vanishPermission) && Config.getValueOrDefault("vanish-on-join", false)) {
+        val joinVanishedPermission = Config.getValueOrDefault(
+            "permissions.join-vanished",
+            "advancedvanish.join-vanished"
+        )
+
+        if (player.hasPermission(vanishPermission) && Config.getValueOrDefault("vanish-on-join", false) || player.hasPermission(joinVanishedPermission)) {
             AdvancedVanishAPI.vanishPlayer(player, true)
             player.sendConfigMessage("vanish-on")
         }
