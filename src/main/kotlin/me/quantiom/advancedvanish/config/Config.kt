@@ -4,22 +4,44 @@ import co.aikar.commands.Locales
 import co.aikar.commands.MessageKeys
 import co.aikar.locales.MessageKeyProvider
 import com.google.common.collect.Maps
+import com.google.common.io.Closeables
 import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.util.applyPlaceholders
 import me.quantiom.advancedvanish.util.color
-import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
+import java.io.IOException
+import java.io.InputStream
+import java.util.*
 import java.util.logging.Level
-
 
 object Config {
     var savedConfig: FileConfiguration? = null
     var usingPriorities = false
 
-    private const val CONFIG_VERSION = 3
+    private var CONFIG_VERSION: Int? = null
+
+    // get config version from maven variable
+    init {
+        val resource = this.javaClass.classLoader.getResourceAsStream("app.properties")
+        val p = Properties()
+        var inputStream: InputStream? = null
+
+        try {
+            inputStream = resource.buffered()
+            p.load(inputStream)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            AdvancedVanish.instance!!.logger.log(Level.SEVERE, "Unable to read app.properties! Shutting down...")
+            AdvancedVanish.instance!!.pluginLoader.disablePlugin(AdvancedVanish.instance!!)
+        } finally {
+            Closeables.closeQuietly(inputStream)
+            CONFIG_VERSION = p.getProperty("application.config.version").toInt()
+        }
+    }
+
     private var messages: MutableMap<String, List<String>> = Maps.newHashMap()
 
     fun reload() {

@@ -5,7 +5,7 @@
 #  / ____ \ (_| |\ V / (_| | | | | (_|  __/ (_| |  \  / (_| | | | | \__ \ | | |   #
 # /_/    \_\__,_| \_/ \__,_|_| |_|\___\___|\__,_|   \/ \__,_|_| |_|_|___/_| |_|   #
 ###################################################################################
-# Made by quantiom
+# Made by quantiom, config made for v%PROJECT_VERSION%
 
 # Enable vanish on join
 vanish-on-join: true
@@ -190,4 +190,4 @@ command-handler-messages:
   generic-error: "&cError: %error%"
 
 # Config version - Do NOT change this manually
-config-version: 4
+config-version: %CONFIG_VERSION%
