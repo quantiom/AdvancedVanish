@@ -14,6 +14,6 @@ class GroupManagerHandler : IPermissionsHandler {
             .getAllPlayersPermissions(player.name)
             .filter { it.startsWith("advancedvanish-priority.") }
             .mapNotNull { it.split(".")[1].toIntOrNull() }
-            .max() ?: 0
+            .maxOrNull() ?: 0
     }
 }

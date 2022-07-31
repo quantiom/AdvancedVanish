@@ -22,7 +22,7 @@ class PlaceHolderApiHook : IHook {
         override fun canRegister() = true
 
         override fun onPlaceholderRequest(player: Player, params: String): String? {
-            return when (params.toLowerCase()) {
+            return when (params.lowercase()) {
                 isVanishedPlaceholder -> if (player.isVanished()) "Yes" else "No"
                 vanishedPlayersPlaceholder -> {
                     val players = AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).map { it!! }.joinToString(", ", transform = Player::getName)

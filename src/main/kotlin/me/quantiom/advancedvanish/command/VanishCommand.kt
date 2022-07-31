@@ -103,7 +103,7 @@ object VanishCommand : BaseCommand() {
     private fun onSetCommand(sender: CommandSender, target: OnlinePlayer, status: String) {
         if (!permissionCheck(sender, "permissions.set-other-command", "advancedvanish.set-other-command")) return
 
-        val toChange = status.toLowerCase() == "on" || status.toLowerCase() == "true"
+        val toChange = status.lowercase() == "on" || status.lowercase() == "true"
         var sendAlready = false
 
         println(toChange)
@@ -164,7 +164,7 @@ object VanishCommand : BaseCommand() {
     }
 
     private fun permissionCheck(sender: CommandSender, key: String, default: String): Boolean {
-        if (!sender.hasPermission(Config.getValueOrDefault(key, "advancedvanish.help-command"))) {
+        if (!sender.hasPermission(Config.getValueOrDefault(key, default))) {
             sender.sendConfigMessage("no-permission")
             return false
         }

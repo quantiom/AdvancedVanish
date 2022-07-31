@@ -151,7 +151,7 @@ object VanishListener : Listener {
                         event.player.openInventory(cloneInventory)
                     }
 
-                    event.player.sendConfigMessage("opening-container-silently", "%type%" to inventoryName.toLowerCase())
+                    event.player.sendConfigMessage("opening-container-silently", "%type%" to inventoryName.lowercase())
                     event.isCancelled = true
                 }
             }
