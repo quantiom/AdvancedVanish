@@ -9,6 +9,10 @@
 
 # Enable vanish on join
 vanish-on-join: true
+# Saves the vanish state when a player logs off
+# Example: Player joins with `vanish-on-join` enabled, turns
+# off vanish, and rejoins without vanish enabled
+keep-vanish-state: false
 
 # Actions when players are vanished
 # true = enabled, false = disabled
@@ -24,7 +28,7 @@ when-vanished:
   open-and-use-chests: false
   pick-up-items: false
   drop-items: false
-  # Find potion effect names here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html#INVISIBILITY
+  # Find potion effect names here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html
   # Write each effect in this format: "NAME:AMPLIFIER"
   # Example: "INVISIBILITY:2"
   give-potion-effects:
