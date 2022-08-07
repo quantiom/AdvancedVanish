@@ -13,6 +13,10 @@ vanish-on-join: true
 # Example: Player joins with `vanish-on-join` enabled, turns
 # off vanish, and rejoins without vanish enabled
 keep-vanish-state: false
+# The option above must be set to true
+# Stores vanish states to a file, so they
+# persist outside of server restarts
+keep-vanish-state-persistent: false
 
 # Actions when players are vanished
 # true = enabled, false = disabled

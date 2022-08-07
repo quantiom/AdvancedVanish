@@ -6,6 +6,7 @@ import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.listener.VanishListener
 import me.quantiom.advancedvanish.permission.PermissionsManager
+import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
@@ -37,6 +38,7 @@ class AdvancedVanish : JavaPlugin() {
     }
 
     override fun onDisable() {
+        VanishStateManager.onDisable()
         AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).forEach { AdvancedVanishAPI.unVanishPlayer(it!!) }
         HooksManager.disableHooks()
         commandManager?.unregisterCommand(VanishCommand)

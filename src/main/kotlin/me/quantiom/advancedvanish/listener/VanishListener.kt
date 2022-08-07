@@ -2,6 +2,7 @@ package me.quantiom.advancedvanish.listener
 
 import com.google.common.collect.Maps
 import me.quantiom.advancedvanish.config.Config
+import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.isVanished
 import me.quantiom.advancedvanish.util.sendConfigMessage
@@ -26,8 +27,6 @@ import org.bukkit.event.player.*
 import java.util.*
 
 object VanishListener : Listener {
-    private val savedVanishStates: MutableMap<UUID, Boolean> = Maps.newHashMap()
-
     @EventHandler
     private fun onJoin(event: PlayerJoinEvent) {
         val player = event.player
@@ -39,10 +38,10 @@ object VanishListener : Listener {
         var doVanish = false
 
         if (player.hasPermission(vanishPermission)) {
-            if (Config.getValueOrDefault("keep-vanish-state", false) && this.savedVanishStates.containsKey(player.uniqueId)) {
-                if (this.savedVanishStates[player.uniqueId]!!) {
+            if (Config.getValueOrDefault("keep-vanish-state", false) && VanishStateManager.savedVanishStates.containsKey(player.uniqueId)) {
+                if (VanishStateManager.savedVanishStates[player.uniqueId]!!) {
                     doVanish = true
-                    this.savedVanishStates.remove(player.uniqueId)
+                    VanishStateManager.savedVanishStates.remove(player.uniqueId)
                 }
             } else if (Config.getValueOrDefault("vanish-on-join", false)) {
                 doVanish = true
@@ -71,7 +70,7 @@ object VanishListener : Listener {
         val isVanished = player.isVanished()
 
         if (isVanished || player.hasPermission(Config.getValueOrDefault("permissions.vanish", "advancedvanish.vanish"))) {
-            this.savedVanishStates[player.uniqueId] = isVanished
+            VanishStateManager.savedVanishStates[player.uniqueId] = isVanished
 
             if (isVanished) {
                 AdvancedVanishAPI.unVanishPlayer(player, true)
