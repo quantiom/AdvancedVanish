@@ -92,7 +92,7 @@ object AdvancedVanishAPI {
             Bukkit.broadcastMessage(message)
 
             if (HooksManager.isHookEnabled("DiscordSrv")) {
-                DiscordSRV.getPlugin().sendJoinMessage(player, message)
+                DiscordSRV.getPlugin().sendLeaveMessage(player, message)
             }
         }
 
@@ -152,7 +152,7 @@ object AdvancedVanishAPI {
             Bukkit.broadcastMessage(message)
 
             if (HooksManager.isHookEnabled("DiscordSrv")) {
-                DiscordSRV.getPlugin().sendLeaveMessage(player, message)
+                DiscordSRV.getPlugin().sendJoinMessage(player, message)
             }
         }
 
