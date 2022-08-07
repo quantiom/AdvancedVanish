@@ -77,7 +77,7 @@ Player.isVanished(): Boolean
 ### Events
 - `PrePlayerVanishEvent` - Gets called before vanishing a player, implements `Canellable`.
 - `PlayerVanishEvent` - Gets called after a player vanishes.
-- `PrePlayerUnVanishEvent` - Gets called before a player unvanishes, imeplements `Cancellable`.
+- `PrePlayerUnVanishEvent` - Gets called before a player unvanishes, implements `Cancellable`.
 - `PlayerUnVanishEvent` - Gets called after a player unvanishes.
 ### Example Usage
 ```kotlin
