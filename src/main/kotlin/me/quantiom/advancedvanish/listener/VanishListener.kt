@@ -1,6 +1,8 @@
 package me.quantiom.advancedvanish.listener
 
+import com.google.common.collect.Maps
 import me.quantiom.advancedvanish.config.Config
+import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.isVanished
 import me.quantiom.advancedvanish.util.sendConfigMessage
@@ -22,6 +24,7 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.*
+import java.util.*
 
 object VanishListener : Listener {
     @EventHandler
@@ -37,7 +40,20 @@ object VanishListener : Listener {
             "advancedvanish.join-vanished"
         )
 
-        if (player.hasPermission(vanishPermission) && Config.getValueOrDefault("vanish-on-join", false) || player.hasPermission(joinVanishedPermission)) {
+        var doVanish = false
+
+        if (player.hasPermission(vanishPermission)) {
+            if (Config.getValueOrDefault("keep-vanish-state", false) && VanishStateManager.savedVanishStates.containsKey(player.uniqueId)) {
+                if (VanishStateManager.savedVanishStates[player.uniqueId]!!) {
+                    doVanish = true
+                    VanishStateManager.savedVanishStates.remove(player.uniqueId)
+                }
+            } else if (Config.getValueOrDefault("vanish-on-join", false) || player.hasPermission(joinVanishedPermission)) {
+                doVanish = true
+            }
+        }
+
+        if (doVanish) {
             AdvancedVanishAPI.vanishPlayer(player, true)
             player.sendConfigMessage("vanish-on")
         }
@@ -55,12 +71,19 @@ object VanishListener : Listener {
 
     @EventHandler
     private fun onDisconnect(event: PlayerQuitEvent) {
-        if (event.player.isVanished()) {
-            AdvancedVanishAPI.unVanishPlayer(event.player, true)
+        val player = event.player
+        val isVanished = player.isVanished()
+
+        if (isVanished || player.hasPermission(Config.getValueOrDefault("permissions.vanish", "advancedvanish.vanish"))) {
+            VanishStateManager.savedVanishStates[player.uniqueId] = isVanished
+
+            if (isVanished) {
+                AdvancedVanishAPI.unVanishPlayer(player, true)
+            }
         }
 
         if (!Config.getValueOrDefault("when-vanished.leave-messages", false)) {
-            if (AdvancedVanishAPI.isPlayerVanished(event.player)) {
+            if (AdvancedVanishAPI.isPlayerVanished(player)) {
                 event.quitMessage = null
             }
         }
@@ -132,7 +155,7 @@ object VanishListener : Listener {
                         event.player.openInventory(cloneInventory)
                     }
 
-                    event.player.sendConfigMessage("opening-container-silently", "%type%" to inventoryName.toLowerCase())
+                    event.player.sendConfigMessage("opening-container-silently", "%type%" to inventoryName.lowercase())
                     event.isCancelled = true
                 }
             }
