@@ -161,7 +161,11 @@ object AdvancedVanishAPI {
 
     fun refreshVanished(player: Player) {
         this.vanishedPlayers.forEach { uuid ->
-            Bukkit.getPlayer(uuid)?.let { player.hidePlayer(it) }
+            Bukkit.getPlayer(uuid)?.let {
+                if (!this.canSee(player, it)) {
+                    player.hidePlayer(it)
+                }
+            }
         }
     }
 

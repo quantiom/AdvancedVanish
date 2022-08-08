@@ -1,6 +1,5 @@
 package me.quantiom.advancedvanish.listener
 
-import com.google.common.collect.Maps
 import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
@@ -10,7 +9,6 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.Barrel
 import org.bukkit.block.Chest
-import org.bukkit.block.EnderChest
 import org.bukkit.block.ShulkerBox
 import org.bukkit.entity.Player
 import org.bukkit.event.Cancellable
@@ -24,7 +22,6 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.*
-import java.util.*
 
 object VanishListener : Listener {
     @EventHandler
@@ -53,9 +50,7 @@ object VanishListener : Listener {
             player.sendConfigMessage("vanish-on")
         }
 
-        if (!player.hasPermission(vanishPermission)) {
-            AdvancedVanishAPI.refreshVanished(player)
-        }
+        AdvancedVanishAPI.refreshVanished(player)
 
         if (!Config.getValueOrDefault("when-vanished.join-messages", false)) {
             if (AdvancedVanishAPI.isPlayerVanished(player)) {
