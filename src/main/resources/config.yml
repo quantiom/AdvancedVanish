@@ -7,6 +7,9 @@
 ###################################################################################
 # Made by quantiom, config made for v%PROJECT_VERSION%
 
+# Automatically check for updates
+check-for-updates: true
+
 # Enable vanish on join
 vanish-on-join: true
 # Saves the vanish state when a player logs off
