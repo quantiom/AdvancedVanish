@@ -27,9 +27,15 @@ object VanishListener : Listener {
     @EventHandler
     private fun onJoin(event: PlayerJoinEvent) {
         val player = event.player
+
         val vanishPermission = Config.getValueOrDefault(
             "permissions.vanish",
             "advancedvanish.vanish"
+        )
+
+        val joinVanishedPermission = Config.getValueOrDefault(
+            "permissions.join-vanished",
+            "advancedvanish.join-vanished"
         )
 
         var doVanish = false
@@ -40,7 +46,7 @@ object VanishListener : Listener {
                     doVanish = true
                     VanishStateManager.savedVanishStates.remove(player.uniqueId)
                 }
-            } else if (Config.getValueOrDefault("vanish-on-join", false)) {
+            } else if (Config.getValueOrDefault("vanish-on-join", false) || player.hasPermission(joinVanishedPermission)) {
                 doVanish = true
             }
         }
