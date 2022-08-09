@@ -8,6 +8,7 @@ import me.quantiom.advancedvanish.listener.VanishListener
 import me.quantiom.advancedvanish.permission.PermissionsManager
 import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
+import me.quantiom.advancedvanish.util.UpdateChecker
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
@@ -31,6 +32,17 @@ class AdvancedVanish : JavaPlugin() {
         }
 
         Config.reload()
+
+        // update checker
+        if (Config.getValueOrDefault("check-for-updates", true)) {
+            UpdateChecker.getVersion {
+                if (it != this.description.version) {
+                    this.logger.info("A new update for AdvancedVanish (v${it}) is available:")
+                    this.logger.info("https://www.spigotmc.org/resources/advancedvanish.86036/")
+                }
+            }
+        }
+
         this.server.pluginManager.registerEvents(VanishListener, this)
 
         PermissionsManager.setupPermissionsHandler()

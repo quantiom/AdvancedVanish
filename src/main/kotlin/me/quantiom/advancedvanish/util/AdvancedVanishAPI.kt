@@ -10,7 +10,9 @@ import me.quantiom.advancedvanish.event.PrePlayerUnVanishEvent
 import me.quantiom.advancedvanish.event.PrePlayerVanishEvent
 import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.permission.PermissionsManager
+import me.quantiom.advancedvanish.state.VanishStateManager
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
@@ -117,6 +119,7 @@ object AdvancedVanishAPI {
         if (prePlayerUnVanishEvent.isCancelled) return
 
         this.vanishedPlayers.remove(player.uniqueId)
+        VanishStateManager.interactEnabled.remove(player.uniqueId)
 
         this.storedPotionEffects[player.uniqueId]?.let {
             for (potionEffect in it) {
@@ -135,7 +138,8 @@ object AdvancedVanishAPI {
                 it.showPlayer(player)
             }
 
-        if (!player.hasPermission(Config.getValueOrDefault("permissions.keep-fly-on-unvanish", "advancedvanish.keep-fly"))
+        // ignore if they are in spectator mode (allowed to fly by default)
+        if (player.gameMode != GameMode.SPECTATOR && !player.hasPermission(Config.getValueOrDefault("permissions.keep-fly-on-unvanish", "advancedvanish.keep-fly"))
             && !Config.getValueOrDefault("advancedvanish.fly.keep-on-unvanish", false)) {
             player.isFlying = false
             player.allowFlight = false
@@ -161,7 +165,11 @@ object AdvancedVanishAPI {
 
     fun refreshVanished(player: Player) {
         this.vanishedPlayers.forEach { uuid ->
-            Bukkit.getPlayer(uuid)?.let { player.hidePlayer(it) }
+            Bukkit.getPlayer(uuid)?.let {
+                if (!this.canSee(player, it)) {
+                    player.hidePlayer(it)
+                }
+            }
         }
     }
 

@@ -7,6 +7,9 @@
 ###################################################################################
 # Made by quantiom, config made for v%PROJECT_VERSION%
 
+# Automatically check for updates
+check-for-updates: true
+
 # Enable vanish on join
 vanish-on-join: true
 # Saves the vanish state when a player logs off
@@ -50,6 +53,7 @@ permissions:
   version-command: "advancedvanish.version-command"
   help-command: "advancedvanish.help-command"
   reload-config-command: "advancedvanish.reload-config-command"
+  interact-command: "advancedvanish.interact-command"
   priority-command: "advancedvanish.priority-command"
   list-command: "advancedvanish.list-command"
   status-command: "advancedvanish.status-command"
@@ -178,6 +182,10 @@ messages:
   #   %vanish-status% - "on" or "off"
   #   %vanish-status-word% - "vanished" or "not vanished"
   vanish-set-other-command-already: "&c%target-name%&f is already &c%vanish-status-word%"
+  must-be-vanished-to-use-command: "&cYou must be vanished to use this command."
+  # Placeholders:
+  #   %interact-status%" - "on" or "off"
+  vanish-interact-toggled: "&fYou have turned %interact-status% interacting while vanished."
   action-bar: "&cYou are in vanish."
   disguise-removed-because-vanish: "Your disguise has been &cremoved&f because you are in vanish"
 

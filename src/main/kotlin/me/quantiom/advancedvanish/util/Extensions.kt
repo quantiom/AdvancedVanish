@@ -1,12 +1,10 @@
 package me.quantiom.advancedvanish.util
 
-import joptsimple.internal.Messages.message
 import me.quantiom.advancedvanish.config.Config
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import java.util.regex.Pattern
-
 
 fun String.applyPlaceholders(vararg pairs: Pair<String, String>): String {
     var intermediate = this
