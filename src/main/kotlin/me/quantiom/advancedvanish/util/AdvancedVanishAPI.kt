@@ -12,6 +12,7 @@ import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.permission.PermissionsManager
 import me.quantiom.advancedvanish.state.VanishStateManager
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
@@ -137,7 +138,8 @@ object AdvancedVanishAPI {
                 it.showPlayer(player)
             }
 
-        if (!player.hasPermission(Config.getValueOrDefault("permissions.keep-fly-on-unvanish", "advancedvanish.keep-fly"))
+        // ignore if they are in spectator mode (allowed to fly by default)
+        if (player.gameMode != GameMode.SPECTATOR && !player.hasPermission(Config.getValueOrDefault("permissions.keep-fly-on-unvanish", "advancedvanish.keep-fly"))
             && !Config.getValueOrDefault("advancedvanish.fly.keep-on-unvanish", false)) {
             player.isFlying = false
             player.allowFlight = false
