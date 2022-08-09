@@ -7,6 +7,7 @@ import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.permission.PermissionsManager
+import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.color
 import me.quantiom.advancedvanish.util.isVanished
@@ -23,6 +24,7 @@ object VanishCommand : BaseCommand() {
         "&c/vanish &8- &fToggle vanish.",
         "&c/vanish version &8- &fShows the version of the plugin.",
         "&c/vanish reload &8- &fReloads the config and hooks.",
+        "&c/vanish interact &8- &fToggles interacting with blocks while in vanish.",
         "&c/vanish priority &8- &fDisplays your vanish priority.",
         "&c/vanish list &8- &fDisplays a list of vanished players.",
         "&c/vanish status <player> &8- &fCheck if a player is in vanish.",
@@ -62,6 +64,23 @@ object VanishCommand : BaseCommand() {
 
         HooksManager.reloadHooks()
         PermissionsManager.setupPermissionsHandler()
+    }
+
+    @Subcommand("interact")
+    private fun onInteractCommand(player: Player) {
+        if (!permissionCheck(player, "permissions.interact-command", "advancedvanish.interact-command")) return
+
+        if (!player.isVanished()) {
+            player.sendConfigMessage("must-be-vanished-to-use-command")
+        } else {
+            if (VanishStateManager.interactEnabled.contains(player.uniqueId)) {
+                VanishStateManager.interactEnabled.remove(player.uniqueId)
+                player.sendConfigMessage("vanish-interact-toggled", "%interact-status%" to "off")
+            } else {
+                VanishStateManager.interactEnabled.add(player.uniqueId)
+                player.sendConfigMessage("vanish-interact-toggled", "%interact-status%" to "on")
+            }
+        }
     }
 
     @Subcommand("priority")

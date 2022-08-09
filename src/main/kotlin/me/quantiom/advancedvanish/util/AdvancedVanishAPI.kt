@@ -10,6 +10,7 @@ import me.quantiom.advancedvanish.event.PrePlayerUnVanishEvent
 import me.quantiom.advancedvanish.event.PrePlayerVanishEvent
 import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.permission.PermissionsManager
+import me.quantiom.advancedvanish.state.VanishStateManager
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
@@ -117,6 +118,7 @@ object AdvancedVanishAPI {
         if (prePlayerUnVanishEvent.isCancelled) return
 
         this.vanishedPlayers.remove(player.uniqueId)
+        VanishStateManager.interactEnabled.remove(player.uniqueId)
 
         this.storedPotionEffects[player.uniqueId]?.let {
             for (potionEffect in it) {

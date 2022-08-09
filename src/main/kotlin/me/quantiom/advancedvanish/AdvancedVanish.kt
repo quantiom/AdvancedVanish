@@ -11,9 +11,7 @@ import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.UpdateChecker
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
-import java.io.IOException
 import java.util.logging.Level
-
 
 class AdvancedVanish : JavaPlugin() {
     companion object {

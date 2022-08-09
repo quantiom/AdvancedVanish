@@ -85,7 +85,8 @@ object VanishListener : Listener {
             event,
             event.player,
             "when-vanished.send-messages",
-            "cannot-chat-while-vanished"
+            "cannot-chat-while-vanished",
+            false
         )
 
     @EventHandler
@@ -94,7 +95,8 @@ object VanishListener : Listener {
             event,
             event.player,
             "when-vanished.place-blocks",
-            "cannot-place-blocks-while-vanished"
+            "cannot-place-blocks-while-vanished",
+            true
         )
 
     @EventHandler
@@ -103,7 +105,8 @@ object VanishListener : Listener {
             event,
             event.player,
             "when-vanished.break-blocks",
-            "cannot-break-blocks-while-vanished"
+            "cannot-break-blocks-while-vanished",
+            true
         )
 
     @EventHandler
@@ -149,12 +152,15 @@ object VanishListener : Listener {
                     event.isCancelled = true
                 }
             }
-        } else genericEventCancel(
-            event,
-            event.player,
-            "when-vanished.interact",
-            ""
-        )
+        } else if (!VanishStateManager.canInteract(event.player)) {
+            genericEventCancel(
+                event,
+                event.player,
+                "when-vanished.interact",
+                "",
+                true
+            )
+        }
     }
 
     @EventHandler
@@ -168,7 +174,8 @@ object VanishListener : Listener {
             event,
             event.player,
             "when-vanished.pick-up-items",
-            ""
+            "",
+            true
         )
 
     @EventHandler
@@ -177,7 +184,8 @@ object VanishListener : Listener {
             event,
             event.player,
             "when-vanished.drop-items",
-            "cannot-drop-items-while-vanished"
+            "cannot-drop-items-while-vanished",
+            true
         )
 
     @EventHandler
@@ -187,7 +195,8 @@ object VanishListener : Listener {
                 event,
                 event.entity as Player,
                 "when-vanished.lose-hunger",
-                ""
+                "",
+                false
             )
         }
     }
@@ -199,7 +208,8 @@ object VanishListener : Listener {
                 event,
                 event.target as Player,
                 "when-vanished.mob-targeting",
-                ""
+                "",
+                false
             )
         }
     }
@@ -207,7 +217,7 @@ object VanishListener : Listener {
     @EventHandler
     private fun onDamage(event: EntityDamageByEntityEvent) {
         (event.damager as? Player)?.let { damager ->
-            if (damager.isVanished() && !Config.getValueOrDefault("when-vanished.attack-entities", false)) {
+            if (damager.isVanished() && !Config.getValueOrDefault("when-vanished.attack-entities", false) && !VanishStateManager.canInteract(damager)) {
                 damager.sendConfigMessage("cannot-attack-entities-while-vanished")
                 event.isCancelled = true
             }
@@ -220,8 +230,12 @@ object VanishListener : Listener {
         }
     }
 
-    private fun genericEventCancel(event: Cancellable, player: Player, toggle: String, message: String) {
+    private fun genericEventCancel(event: Cancellable, player: Player, toggle: String, message: String, ignoreIfCanInteract: Boolean) {
         if (player.isVanished() && !Config.getValueOrDefault(toggle, false)) {
+            if (ignoreIfCanInteract && VanishStateManager.canInteract(player)) {
+                return
+            }
+
             if (message.isNotEmpty()) player.sendConfigMessage(message)
             event.isCancelled = true
         }
