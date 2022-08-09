@@ -58,7 +58,6 @@ permissions:
   keep-fly-on-unvanish: "advancedvanish.keep-fly"
   join-vanished: "advancedvanish.join-vanished"
 
-
 # Fake join/leave messages
 join-leave-messages:
   fake-join-message-on-unvanish:

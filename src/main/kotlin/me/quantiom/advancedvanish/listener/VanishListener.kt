@@ -30,6 +30,7 @@ object VanishListener : Listener {
     @EventHandler
     private fun onJoin(event: PlayerJoinEvent) {
         val player = event.player
+
         val vanishPermission = Config.getValueOrDefault(
             "permissions.vanish",
             "advancedvanish.vanish"
