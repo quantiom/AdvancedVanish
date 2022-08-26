@@ -7,6 +7,10 @@
 ###################################################################################
 # Made by quantiom, config made for v%PROJECT_VERSION%
 
+# Messages in this config use MiniMessage formatting
+# For example, the message "&4Hello &a&lWorld" would need to be "<red>Hello <green><bold>World"
+# Please check the documentation for more information: https://docs.adventure.kyori.net/minimessage/format.html
+
 # Automatically check for updates
 check-for-updates: true
 
