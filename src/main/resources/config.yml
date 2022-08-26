@@ -60,6 +60,7 @@ permissions:
   toggle-other-command: "advancedvanish.toggle-other-command"
   set-other-command: "advancedvanish.set-other-command"
   keep-fly-on-unvanish: "advancedvanish.keep-fly"
+  join-vanished: "advancedvanish.join-vanished"
 
 # Fake join/leave messages
 join-leave-messages:
