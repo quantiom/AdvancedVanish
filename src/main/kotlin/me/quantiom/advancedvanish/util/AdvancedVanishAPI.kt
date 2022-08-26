@@ -3,6 +3,7 @@ package me.quantiom.advancedvanish.util
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
 import github.scarsz.discordsrv.DiscordSRV
+import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.event.PlayerUnVanishEvent
 import me.quantiom.advancedvanish.event.PlayerVanishEvent
@@ -39,7 +40,7 @@ object AdvancedVanishAPI {
 
         this.vanishedPlayers.add(player.uniqueId)
 
-        val previousEffects: MutableList<PotionEffect> = Lists.newArrayList();
+        val previousEffects: MutableList<PotionEffect> = Lists.newArrayList()
 
         // add potion effects
         Config.getValueOrDefault("when-vanished.give-potion-effects", Lists.newArrayList<String>())
@@ -86,15 +87,15 @@ object AdvancedVanishAPI {
         if (!onJoin && Config.getValueOrDefault("join-leave-messages.fake-leave-message-on-vanish.enable", false)) {
             val message = Config.getValueOrDefault(
                 "join-leave-messages.fake-leave-message-on-vanish.message",
-                "&e%player-name% has left the game."
+                "<yellow>%player-name% has left the game."
             ).applyPlaceholders(
                 "%player-name%" to player.name
             ).color()
 
-            Bukkit.broadcastMessage(message)
+            Bukkit.getOnlinePlayers().forEach { it.sendComponentMessage(message) }
 
             if (HooksManager.isHookEnabled("DiscordSrv")) {
-                DiscordSRV.getPlugin().sendLeaveMessage(player, message)
+                DiscordSRV.getPlugin().sendLeaveMessage(player, message.colorLegacy())
             }
         }
 
@@ -148,15 +149,15 @@ object AdvancedVanishAPI {
         if (!onLeave && Config.getValueOrDefault("join-leave-messages.fake-join-message-on-unvanish.enable", false)) {
             val message = Config.getValueOrDefault(
                 "join-leave-messages.fake-join-message-on-unvanish.message",
-                "&e%player-name% has joined the game."
+                "<yellow>%player-name% has joined the game."
             ).applyPlaceholders(
                 "%player-name%" to player.name
             ).color()
 
-            Bukkit.broadcastMessage(message)
+            Bukkit.getOnlinePlayers().forEach { it.sendComponentMessage(message) }
 
             if (HooksManager.isHookEnabled("DiscordSrv")) {
-                DiscordSRV.getPlugin().sendJoinMessage(player, message)
+                DiscordSRV.getPlugin().sendJoinMessage(player, message.colorLegacy())
             }
         }
 

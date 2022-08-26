@@ -8,10 +8,7 @@ import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.permission.PermissionsManager
 import me.quantiom.advancedvanish.state.VanishStateManager
-import me.quantiom.advancedvanish.util.AdvancedVanishAPI
-import me.quantiom.advancedvanish.util.color
-import me.quantiom.advancedvanish.util.isVanished
-import me.quantiom.advancedvanish.util.sendConfigMessage
+import me.quantiom.advancedvanish.util.*
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -20,17 +17,17 @@ import org.bukkit.entity.Player
 object VanishCommand : BaseCommand() {
     private val HELP_MESSAGE = listOf(
         "",
-        "&c&m----------&c&l AdvancedVanish &c&m----------",
-        "&c/vanish &8- &fToggle vanish.",
-        "&c/vanish version &8- &fShows the version of the plugin.",
-        "&c/vanish reload &8- &fReloads the config and hooks.",
-        "&c/vanish interact &8- &fToggles interacting with blocks while in vanish.",
-        "&c/vanish priority &8- &fDisplays your vanish priority.",
-        "&c/vanish list &8- &fDisplays a list of vanished players.",
-        "&c/vanish status <player> &8- &fCheck if a player is in vanish.",
-        "&c/vanish set <player> <on/off> &8- &fSet another player's vanish.",
-        "&c/vanish toggle <player> &8- &fToggle another player's vanish.",
-        "&c&m-----------------------------------",
+        "<red><strikethrough>----------</strikethrough><bold> AdvancedVanish </bold><red><strikethrough>----------",
+        "<red>/vanish <dark_gray>- <white>Toggle vanish.",
+        "<red>/vanish version <dark_gray>- <white>Shows the version of the plugin.",
+        "<red>/vanish reload <dark_gray>- <white>Reloads the config and hooks.",
+        "<red>/vanish interact <dark_gray>- <white>Toggles interacting with blocks while in vanish.",
+        "<red>/vanish priority <dark_gray>- <white>Displays your vanish priority.",
+        "<red>/vanish list <dark_gray>- <white>Displays a list of vanished players.",
+        "<red>/vanish status <player> <dark_gray>- <white>Check if a player is in vanish.",
+        "<red>/vanish set <player> <on/off> <dark_gray>- <white>Set another player's vanish.",
+        "<red>/vanish toggle <player> <dark_gray>- <white>Toggle another player's vanish.",
+        "<red><strikethrough>-----------------------------------",
         ""
     )
 
@@ -179,7 +176,7 @@ object VanishCommand : BaseCommand() {
     private fun onHelp(sender: CommandSender) {
         if (!permissionCheck(sender, "permissions.help-command", "advancedvanish.help-command")) return
 
-        this.HELP_MESSAGE.forEach { sender.sendMessage(it.color()) }
+        this.HELP_MESSAGE.forEach { sender.sendComponentMessage(it.color()) }
     }
 
     private fun permissionCheck(sender: CommandSender, key: String, default: String): Boolean {

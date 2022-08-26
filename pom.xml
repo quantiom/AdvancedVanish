@@ -16,7 +16,7 @@
         <kotlin.version>1.6.0</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.13.1</junit.version>
-        <config.version>7</config.version>
+        <config.version>8</config.version>
     </properties>
 
     <repositories>
@@ -161,6 +161,16 @@
             <version>7.4</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-platform-bukkit</artifactId>
+            <version>4.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>4.11.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -253,7 +263,7 @@
                     <relocations>
                         <relocation>
                             <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>me.quantiom.advancedvanish.acf</shadedPattern>
+                            <shadedPattern>me.quantiom.advancedvanish.shaded.acf</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>co.aikar.locales</pattern>
@@ -261,7 +271,11 @@
                         </relocation>
                         <relocation>
                             <pattern>kotlin</pattern>
-                            <shadedPattern>me.quantiom.kotlin</shadedPattern>
+                            <shadedPattern>me.quantiom.advancedvanish.shaded.kotlin</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>net.kyori</pattern>
+                            <shadedPattern>me.quantiom.advancedvanish.shaded</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
