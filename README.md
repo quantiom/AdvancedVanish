@@ -33,6 +33,8 @@ GitBook: https://quantioms.gitbook.io/advancedvanish/
   - `/vanish status <player>` *- Check if a player is in vanish.*
   - `/vanish set <player> <on/off>` *- Set another player's vanish.*
   - `/vanish toggle <player>` *- Toggle another player's vanish.*
+  - `/vanish interact` *- Toggles interacting while in vanish*
+- Cross Server Vanish Synchronization
 - For the rest of the features, check out the [GitBook page](https://quantioms.gitbook.io/advancedvanish/).
 
 ## Hooks
