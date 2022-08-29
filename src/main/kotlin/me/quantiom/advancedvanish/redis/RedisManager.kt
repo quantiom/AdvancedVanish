@@ -93,7 +93,6 @@ object RedisManager : Listener {
             try {
                 this.pool!!.resource.let { resource ->
                     resource.set(key, value)
-                    println("set ${key} to ${value}")
                     resource.close()
                 }
             } catch (e: Exception) {
