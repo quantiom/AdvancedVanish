@@ -16,7 +16,7 @@
         <kotlin.version>1.6.0</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.13.1</junit.version>
-        <config.version>8</config.version>
+        <config.version>9</config.version>
     </properties>
 
     <repositories>
@@ -171,6 +171,11 @@
             <artifactId>adventure-text-minimessage</artifactId>
             <version>4.11.0</version>
         </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>4.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -276,6 +281,10 @@
                         <relocation>
                             <pattern>net.kyori</pattern>
                             <shadedPattern>me.quantiom.advancedvanish.shaded</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>redis.clients</pattern>
+                            <pattern>me.quantiom.advancedvanish.shaded.redis</pattern>
                         </relocation>
                     </relocations>
                 </configuration>

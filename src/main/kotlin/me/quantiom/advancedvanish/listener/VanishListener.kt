@@ -1,6 +1,7 @@
 package me.quantiom.advancedvanish.listener
 
 import me.quantiom.advancedvanish.config.Config
+import me.quantiom.advancedvanish.redis.RedisManager
 import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.isVanished
@@ -41,13 +42,17 @@ object VanishListener : Listener {
         var doVanish = false
 
         if (player.hasPermission(vanishPermission)) {
-            if (Config.getValueOrDefault("keep-vanish-state", false) && VanishStateManager.savedVanishStates.containsKey(player.uniqueId)) {
-                if (VanishStateManager.savedVanishStates[player.uniqueId]!!) {
+            if (RedisManager.proxySupportEnabled && RedisManager.loginVanishStates.containsKey(player.uniqueId)) {
+                doVanish = RedisManager.loginVanishStates[player.uniqueId]!!
+            } else {
+                if (Config.getValueOrDefault("keep-vanish-state", false) && VanishStateManager.savedVanishStates.containsKey(player.uniqueId)) {
+                    if (VanishStateManager.savedVanishStates[player.uniqueId]!!) {
+                        doVanish = true
+                        VanishStateManager.savedVanishStates.remove(player.uniqueId)
+                    }
+                } else if (Config.getValueOrDefault("vanish-on-join", false) || player.hasPermission(joinVanishedPermission)) {
                     doVanish = true
-                    VanishStateManager.savedVanishStates.remove(player.uniqueId)
                 }
-            } else if (Config.getValueOrDefault("vanish-on-join", false) || player.hasPermission(joinVanishedPermission)) {
-                doVanish = true
             }
         }
 

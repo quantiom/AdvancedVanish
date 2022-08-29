@@ -6,6 +6,7 @@ import co.aikar.locales.MessageKeyProvider
 import com.google.common.collect.Maps
 import com.google.common.io.Closeables
 import me.quantiom.advancedvanish.AdvancedVanish
+import me.quantiom.advancedvanish.redis.RedisManager
 import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.util.applyPlaceholders
 import me.quantiom.advancedvanish.util.color
@@ -97,6 +98,7 @@ object Config {
 
         this.reloadMessages()
         this.reloadCommandHandlerMessages()
+        RedisManager.setup()
         VanishStateManager.onConfigReload()
         this.usingPriorities = this.getValueOrDefault("priority.enable", false)
     }

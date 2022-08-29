@@ -16,6 +16,8 @@
 # Automatically check for updates
 check-for-updates: true
 
+# WARNING: The three following options will be IGNORED if cross-server-support is enabled
+
 # Enable vanish on join
 vanish-on-join: true
 # Saves the vanish state when a player logs off
@@ -26,6 +28,15 @@ keep-vanish-state: false
 # Stores vanish states to a file, so they
 # persist outside of server restarts
 keep-vanish-state-persistent: false
+
+# Cross-server vanish synchronization
+# Requires Redis
+cross-server-support:
+  enabled: false
+  redis:
+    ip: "127.0.0.1"
+    port: 6379
+    auth: ""
 
 # Actions when players are vanished
 # true = enabled, false = disabled

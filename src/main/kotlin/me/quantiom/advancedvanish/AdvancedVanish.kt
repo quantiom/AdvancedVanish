@@ -6,6 +6,7 @@ import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.listener.VanishListener
 import me.quantiom.advancedvanish.permission.PermissionsManager
+import me.quantiom.advancedvanish.redis.RedisManager
 import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.UpdateChecker
@@ -46,6 +47,7 @@ class AdvancedVanish : JavaPlugin() {
             }
         }
 
+        this.server.pluginManager.registerEvents(RedisManager, this)
         this.server.pluginManager.registerEvents(VanishListener, this)
 
         PermissionsManager.setupPermissionsHandler()
@@ -54,6 +56,7 @@ class AdvancedVanish : JavaPlugin() {
 
     override fun onDisable() {
         adventure?.close()
+        RedisManager.close()
         VanishStateManager.onDisable()
         AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).forEach { AdvancedVanishAPI.unVanishPlayer(it!!) }
         HooksManager.disableHooks()

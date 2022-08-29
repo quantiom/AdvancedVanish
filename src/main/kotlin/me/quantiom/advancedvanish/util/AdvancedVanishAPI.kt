@@ -33,7 +33,7 @@ object AdvancedVanishAPI {
      * @param onJoin If this is being called from the PlayerJoinEvent, used for hook/fake join and leave message functionality
      */
     fun vanishPlayer(player: Player, onJoin: Boolean = false) {
-        val prePlayerVanishEvent = PrePlayerVanishEvent(player)
+        val prePlayerVanishEvent = PrePlayerVanishEvent(player, onJoin)
         Bukkit.getPluginManager().callEvent(prePlayerVanishEvent)
 
         if (prePlayerVanishEvent.isCancelled) return
@@ -103,7 +103,7 @@ object AdvancedVanishAPI {
             player.allowFlight = true
         }
 
-        Bukkit.getPluginManager().callEvent(PlayerVanishEvent(player))
+        Bukkit.getPluginManager().callEvent(PlayerVanishEvent(player, onJoin))
     }
 
     /**
@@ -114,7 +114,7 @@ object AdvancedVanishAPI {
      * @param onLeave If this is being called from the PlayerQuitEvent, used for hook/fake join and leave message functionality
      */
     fun unVanishPlayer(player: Player, onLeave: Boolean = false) {
-        val prePlayerUnVanishEvent = PrePlayerUnVanishEvent(player)
+        val prePlayerUnVanishEvent = PrePlayerUnVanishEvent(player, onLeave)
         Bukkit.getPluginManager().callEvent(prePlayerUnVanishEvent)
 
         if (prePlayerUnVanishEvent.isCancelled) return
@@ -161,7 +161,7 @@ object AdvancedVanishAPI {
             }
         }
 
-        Bukkit.getPluginManager().callEvent(PlayerUnVanishEvent(player))
+        Bukkit.getPluginManager().callEvent(PlayerUnVanishEvent(player, onLeave))
     }
 
     fun refreshVanished(player: Player) {
