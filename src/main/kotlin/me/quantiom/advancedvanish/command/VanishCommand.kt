@@ -122,8 +122,6 @@ object VanishCommand : BaseCommand() {
         val toChange = status.lowercase() == "on" || status.lowercase() == "true"
         var sendAlready = false
 
-        println(toChange)
-
         if (target.player.isVanished()) {
             if (toChange) {
                 sendAlready = true
