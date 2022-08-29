@@ -16,7 +16,7 @@ GitBook: https://quantioms.gitbook.io/advancedvanish/
   - Placeholders
   - Much more...
 - Vanished players are **completely** invisible, as if they are not even online.
-- Vanish priorities/levels ([more info](https://github.com/quantiom/AdvancedVanish/blob/main/src/main/resources/config.yml#L93-L114))
+- Vanish priorities/levels ([more info](https://quantioms.gitbook.io/advancedvanish/features#vanish-priorities))
   - Supports many different permissions plugins. (LuckPerms, PermissionsEx, bPermissions, GroupManager)
 - Many configurable hooks which provide support to other plugins.
    - Essentials
@@ -33,14 +33,14 @@ GitBook: https://quantioms.gitbook.io/advancedvanish/
   - `/vanish status <player>` *- Check if a player is in vanish.*
   - `/vanish set <player> <on/off>` *- Set another player's vanish.*
   - `/vanish toggle <player>` *- Toggle another player's vanish.*
-- For the rest of the features, check out the [config](src/main/resources/config.yml).
+- For the rest of the features, check out the [GitBook page](https://quantioms.gitbook.io/advancedvanish/).
 
 ## Hooks
 In AdvancedVanish, there are many hooks which provide support to other plugins.  
-A full list of hooks with their descriptions can be found in the [config](src/main/resources/config.yml).  
+A full list of hooks with their descriptions can be found on the [GitBook page](https://quantioms.gitbook.io/advancedvanish/features#hooks).  
 
 ## Vanish Priority
-An explanation and guide of how to use vanish priorities can be found in the [config](src/main/resources/config.yml).  
+An explanation and guide of how to use vanish priorities can be found on the [GitBook page](https://quantioms.gitbook.io/advancedvanish/features#vanish-priorities).  
 *Note: Requires a supported permissions plugin to function*
 
 ## API
