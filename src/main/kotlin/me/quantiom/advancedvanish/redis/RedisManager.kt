@@ -20,12 +20,12 @@ object RedisManager : Listener {
     var loginVanishStates: MutableMap<UUID, Boolean> = Maps.newHashMap()
 
     fun setup() {
-        if (Config.getValueOrDefault("proxy-support.enabled", false)) {
+        if (Config.getValueOrDefault("cross-server-support.enabled", false)) {
             this.pool = JedisPool(
-                Config.getValueOrDefault("proxy-support.redis.ip", "127.0.0.1"),
-                Config.getValueOrDefault("proxy-support.redis.port", 6379),
+                Config.getValueOrDefault("cross-server-support.redis.ip", "127.0.0.1"),
+                Config.getValueOrDefault("cross-server-support.redis.port", 6379),
                 null,
-                Config.getValueOrDefault("proxy-support.redis.auth", "").ifEmpty { null },
+                Config.getValueOrDefault("cross-server-support.redis.auth", "").ifEmpty { null },
             )
 
             try {
@@ -40,7 +40,7 @@ object RedisManager : Listener {
             this.proxySupportEnabled = true
             AdvancedVanish.log(Level.INFO, "Successfully connected to Redis.")
         } else {
-            // if the proxy-support option gets disabled when reloading
+            // if the cross-server-support option gets disabled when reloading
             this.pool = null
             this.proxySupportEnabled = false
         }
