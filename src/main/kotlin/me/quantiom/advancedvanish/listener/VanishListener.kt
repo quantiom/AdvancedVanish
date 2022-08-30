@@ -1,7 +1,7 @@
 package me.quantiom.advancedvanish.listener
 
 import me.quantiom.advancedvanish.config.Config
-import me.quantiom.advancedvanish.redis.RedisManager
+import me.quantiom.advancedvanish.sync.ServerSyncManager
 import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
 import me.quantiom.advancedvanish.util.isVanished
@@ -42,8 +42,8 @@ object VanishListener : Listener {
         var doVanish = false
 
         if (player.hasPermission(vanishPermission)) {
-            if (RedisManager.proxySupportEnabled && RedisManager.loginVanishStates.containsKey(player.uniqueId)) {
-                doVanish = RedisManager.loginVanishStates[player.uniqueId]!!
+            if (ServerSyncManager.crossServerSupportEnabled && ServerSyncManager.loginVanishStates.containsKey(player.uniqueId)) {
+                doVanish = ServerSyncManager.loginVanishStates[player.uniqueId]!!
             } else {
                 if (Config.getValueOrDefault("keep-vanish-state", false) && VanishStateManager.savedVanishStates.containsKey(player.uniqueId)) {
                     if (VanishStateManager.savedVanishStates[player.uniqueId]!!) {

@@ -30,13 +30,22 @@ keep-vanish-state: false
 keep-vanish-state-persistent: false
 
 # Cross-server vanish synchronization
-# Requires Redis
+# Requires Redis or SQL
 cross-server-support:
   enabled: false
+  # Either "redis" or "sql"
+  mode: "redis"
   redis:
     ip: "127.0.0.1"
     port: 6379
     auth: ""
+  sql:
+    ip: "127.0.0.1"
+    port: 3306
+    username: "root"
+    password: ""
+    database: "minecraft"
+    table-prefix: "advancedvanish_"
 
 # Actions when players are vanished
 # true = enabled, false = disabled
