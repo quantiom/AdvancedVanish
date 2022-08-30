@@ -64,7 +64,7 @@ Add the dependency and replace `<version>...</version>` with the current version
 <dependency>
   <groupId>com.github.quantiom</groupId>
   <artifactId>AdvancedVanish</artifactId>
-  <version>v1.2.1</version>
+  <version>v1.2.2</version>
 </dependency>
 ```
 
