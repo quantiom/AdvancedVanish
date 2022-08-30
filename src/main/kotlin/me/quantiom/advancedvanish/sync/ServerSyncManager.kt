@@ -44,7 +44,7 @@ object ServerSyncManager : Listener {
 
     @EventHandler
     fun onAsyncJoin(event: AsyncPlayerPreLoginEvent) {
-        this.get(event.uniqueId)?.let {
+        this.get(event.uniqueId).let {
             this.loginVanishStates.put(event.uniqueId, it)
         }
     }
@@ -57,9 +57,9 @@ object ServerSyncManager : Listener {
     fun onUnVanish(event: PlayerUnVanishEvent) =
         run { if (!event.onLeave) this.setAsync(event.player.uniqueId, false) }
 
-    fun get(key: UUID): Boolean? {
-        if (!this.crossServerSupportEnabled) return null
-        return this.serverSyncStoreImpl?.get(key)
+    fun get(key: UUID): Boolean {
+        if (!this.crossServerSupportEnabled) return false
+        return this.serverSyncStoreImpl?.get(key)!!
     }
 
     private fun setAsync(key: UUID, value: Boolean) {
