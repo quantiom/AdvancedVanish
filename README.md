@@ -54,17 +54,18 @@ your plugin's `plugin.yml`.
 Add this repository to your `pom.xml`:
 ```xml
 <repository>
-  <id>jitpack.io</id>
-  <url>https://jitpack.io</url>
-</repository>  
+  <id>repsy</id>
+  <name>quantiom</name>
+  <url>https://repo.repsy.io/mvn/quantiom/minecraft</url>
+</repository>
 ```
 
 Add the dependency and replace `<version>...</version>` with the current version:
 ```xml
 <dependency>
-  <groupId>com.github.quantiom</groupId>
-  <artifactId>AdvancedVanish</artifactId>
-  <version>v1.2.2</version>
+  <groupId>me.quantiom</groupId>
+  <artifactId>advancedvanish</artifactId>
+  <version>1.2.2</version>
 </dependency>
 ```
 

@@ -10,6 +10,15 @@
 
     <name>AdvancedVanish</name>
     <description>A fully customizable and advanced vanish plugin.</description>
+    <url>https://www.spigotmc.org/resources/advancedvanish.86036/</url>
+
+    <distributionManagement>
+        <repository>
+            <id>repsy</id>
+            <name>quantiom</name>
+            <url>https://repo.repsy.io/mvn/quantiom/minecraft</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
