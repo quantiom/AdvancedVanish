@@ -6,14 +6,15 @@ import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.listener.VanishListener
 import me.quantiom.advancedvanish.permission.PermissionsManager
-import me.quantiom.advancedvanish.sync.ServerSyncManager
 import me.quantiom.advancedvanish.state.VanishStateManager
+import me.quantiom.advancedvanish.sync.ServerSyncManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
+import me.quantiom.advancedvanish.util.DependencyManager
 import me.quantiom.advancedvanish.util.UpdateChecker
+import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
-import net.kyori.adventure.platform.bukkit.BukkitAudiences
 
 class AdvancedVanish : JavaPlugin() {
     companion object {
@@ -28,6 +29,10 @@ class AdvancedVanish : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
+
+        // load dependencies
+        DependencyManager.loadDependencies(this)
+
         adventure = BukkitAudiences.create(this)
 
         commandManager = PaperCommandManager(this).also {
