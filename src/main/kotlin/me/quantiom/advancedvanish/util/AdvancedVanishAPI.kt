@@ -2,14 +2,11 @@ package me.quantiom.advancedvanish.util
 
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
-import github.scarsz.discordsrv.DiscordSRV
-import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.event.PlayerUnVanishEvent
 import me.quantiom.advancedvanish.event.PlayerVanishEvent
 import me.quantiom.advancedvanish.event.PrePlayerUnVanishEvent
 import me.quantiom.advancedvanish.event.PrePlayerVanishEvent
-import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.permission.PermissionsManager
 import me.quantiom.advancedvanish.state.VanishStateManager
 import org.bukkit.Bukkit
@@ -93,10 +90,6 @@ object AdvancedVanishAPI {
             ).color()
 
             Bukkit.getOnlinePlayers().forEach { it.sendComponentMessage(message) }
-
-            if (HooksManager.isHookEnabled("DiscordSrv")) {
-                DiscordSRV.getPlugin().sendLeaveMessage(player, message.colorLegacy())
-            }
         }
 
         if (Config.getValueOrDefault("when-vanished.fly.enable", true)) {
@@ -155,10 +148,6 @@ object AdvancedVanishAPI {
             ).color()
 
             Bukkit.getOnlinePlayers().forEach { it.sendComponentMessage(message) }
-
-            if (HooksManager.isHookEnabled("DiscordSrv")) {
-                DiscordSRV.getPlugin().sendJoinMessage(player, message.colorLegacy())
-            }
         }
 
         Bukkit.getPluginManager().callEvent(PlayerUnVanishEvent(player, onLeave))
