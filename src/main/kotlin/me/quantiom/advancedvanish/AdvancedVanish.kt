@@ -16,26 +16,21 @@ import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
 
-class AdvancedVanish : JavaPlugin() {
-    companion object {
-        var instance: AdvancedVanish? = null
-        var commandManager: PaperCommandManager? = null
-        var adventure: BukkitAudiences? = null
+object AdvancedVanish {
+    var instance: AdvancedVanishPlugin? = null
+    var commandManager: PaperCommandManager? = null
+    var adventure: BukkitAudiences? = null
 
-        fun log(level: Level, msg: String) {
-            instance!!.logger.log(level, msg)
-        }
+    fun log(level: Level, msg: String) {
+        instance!!.logger.log(level, msg)
     }
 
-    override fun onEnable() {
-        instance = this
+    fun onEnable(plugin: AdvancedVanishPlugin) {
+        instance = plugin
 
-        // load dependencies
-        DependencyManager.loadDependencies(this)
+        adventure = BukkitAudiences.create(plugin)
 
-        adventure = BukkitAudiences.create(this)
-
-        commandManager = PaperCommandManager(this).also {
+        commandManager = PaperCommandManager(plugin).also {
             it.enableUnstableAPI("help")
             it.registerCommand(VanishCommand, true)
         }
@@ -45,21 +40,21 @@ class AdvancedVanish : JavaPlugin() {
         // update checker
         if (Config.getValueOrDefault("check-for-updates", true)) {
             UpdateChecker.getVersion {
-                if (it != this.description.version) {
-                    this.logger.info("A new update for AdvancedVanish (v${it}) is available:")
-                    this.logger.info("https://www.spigotmc.org/resources/advancedvanish.86036/")
+                if (it != plugin.description.version) {
+                    plugin.logger.info("A new update for AdvancedVanish (v${it}) is available:")
+                    plugin.logger.info("https://www.spigotmc.org/resources/advancedvanish.86036/")
                 }
             }
         }
 
-        this.server.pluginManager.registerEvents(ServerSyncManager, this)
-        this.server.pluginManager.registerEvents(VanishListener, this)
+        plugin.server.pluginManager.registerEvents(ServerSyncManager, plugin)
+        plugin.server.pluginManager.registerEvents(VanishListener, plugin)
 
         PermissionsManager.setupPermissionsHandler()
         HooksManager.setupHooks()
     }
 
-    override fun onDisable() {
+    fun onDisable() {
         adventure?.close()
         ServerSyncManager.close()
         VanishStateManager.onDisable()
