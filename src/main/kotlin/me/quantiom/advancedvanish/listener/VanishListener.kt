@@ -84,7 +84,7 @@ object VanishListener : Listener {
         }
 
         if (!Config.getValueOrDefault("when-vanished.leave-messages", false)) {
-            if (AdvancedVanishAPI.isPlayerVanished(player)) {
+            if (isVanished) {
                 event.quitMessage = null
             }
         }
