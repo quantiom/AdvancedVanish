@@ -36,9 +36,11 @@ public final class DependencyManager {
         kotlinStr += "tlin";
 
         List<Library> libraries = Lists.newArrayList(
+                // exposed
                 this.getLibrary("org{}jetbrains{}exposed", "exposed-core", "0.39.2", "org{}jetbrains{}exposed", "me{}quantiom{}advancedvanish{}shaded{}exposed"),
                 this.getLibrary("org{}jetbrains{}exposed", "exposed-dao", "0.39.2", "org{}jetbrains{}exposed", "me{}quantiom{}advancedvanish{}shaded{}exposed"),
                 this.getLibrary("org{}jetbrains{}exposed", "exposed-jdbc", "0.39.2", "org{}jetbrains{}exposed", "me{}quantiom{}advancedvanish{}shaded{}exposed"),
+                // redis
                 this.getLibrary("redis{}clients", "jedis", "4.2.0", "redis{}clients", "me{}quantiom{}advancedvanish{}shaded{}redis"),
                 // adventure
                 this.getLibrary("net{}kyori", "adventure-api", "4.11.0", "net{}kyori{}adventure", "me{}quantiom{}advancedvanish{}shaded{}adventure"),
@@ -53,6 +55,7 @@ public final class DependencyManager {
                 this.getLibrary("net{}kyori", "adventure-platform-viaversion", "4.1.2", "net{}kyori{}adventure", "me{}quantiom{}advancedvanish{}shaded{}adventure"),
                 this.getLibrary("net{}kyori", "adventure-key", "4.11.0", "net{}kyori{}adventure", "me{}quantiom{}advancedvanish{}shaded{}adventure"),
                 this.getLibrary("net{}kyori", "adventure-text-minimessage", "4.11.0", "net{}kyori{}adventure", "me{}quantiom{}advancedvanish{}shaded{}adventure"),
+                // kotlin
                 this.getLibrary("org{}jetbrains{}" + kotlinStr, kotlinStr + "-stdlib", "1.7.10", kotlinStr, "me.quantiom.advancedvanish.shaded.kotlin")
         );
 
