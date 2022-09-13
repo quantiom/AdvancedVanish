@@ -21,14 +21,14 @@ class PlaceHolderApiHook : IHook {
         override fun persist() = true
         override fun canRegister() = true
 
-        override fun onPlaceholderRequest(player: Player, params: String): String? {
+        override fun onPlaceholderRequest(player: Player?, params: String): String? {
             return when (params.lowercase()) {
-                isVanishedPlaceholder -> if (player.isVanished()) "Yes" else "No"
-                vanishedPlayersPlaceholder -> {
-                    val players = AdvancedVanishAPI.vanishedPlayers.map(Bukkit::getPlayer).map { it!! }.joinToString(", ", transform = Player::getName)
-
-                    if (players.isEmpty()) "None" else players
-                }
+                isVanishedPlaceholder -> if (player?.isVanished() == true) "Yes" else "No"
+                vanishedPlayersPlaceholder -> AdvancedVanishAPI.vanishedPlayers
+                        .map(Bukkit::getPlayer)
+                        .map { it!! }
+                        .joinToString(", ", transform = Player::getName)
+                        .ifEmpty { "None" }
                 playerCountPlaceholder -> (Bukkit.getOnlinePlayers().size - AdvancedVanishAPI.vanishedPlayers.size).toString()
                 else -> null
             }
