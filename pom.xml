@@ -342,10 +342,6 @@
                             <shadedPattern>me.quantiom.advancedvanish.shaded.adventure</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>redis.clients</pattern>
-                            <pattern>me.quantiom.advancedvanish.shaded.redis</pattern>
-                        </relocation>
-                        <relocation>
                             <pattern>net.byteflux.libby</pattern>
                             <shadedPattern>me.quantiom.advancedvanish.shaded.libby</shadedPattern>
                         </relocation>

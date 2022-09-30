@@ -19,12 +19,16 @@ public final class DependencyManager {
     }
 
     private Library getLibrary(String groupId, String artifactId, String version, String pattern, String relocatePattern) {
-        return Library.builder()
+        Library.Builder builder = Library.builder()
                 .groupId(groupId)
                 .artifactId(artifactId)
-                .version(version)
-                .relocate(pattern, relocatePattern)
-                .build();
+                .version(version);
+
+        if (!relocatePattern.isEmpty()) {
+            builder.relocate(pattern, relocatePattern);
+        }
+
+        return builder.build();
     }
 
     public void loadDependencies() {
@@ -41,7 +45,9 @@ public final class DependencyManager {
                 this.getLibrary("org{}jetbrains{}exposed", "exposed-dao", "0.39.2", "org{}jetbrains{}exposed", "me{}quantiom{}advancedvanish{}shaded{}exposed"),
                 this.getLibrary("org{}jetbrains{}exposed", "exposed-jdbc", "0.39.2", "org{}jetbrains{}exposed", "me{}quantiom{}advancedvanish{}shaded{}exposed"),
                 // redis
-                this.getLibrary("redis{}clients", "jedis", "4.2.0", "redis{}clients", "me{}quantiom{}advancedvanish{}shaded{}redis"),
+                this.getLibrary("redis{}clients", "jedis", "4.2.0", "", ""),
+                this.getLibrary("org{}apache{}commons", "commons-pool2", "2.11.1", "", ""),
+                this.getLibrary("org{}json", "json", "20211205", "", ""),
                 // adventure
                 this.getLibrary("net{}kyori", "adventure-api", "4.11.0", "net{}kyori{}adventure", "me{}quantiom{}advancedvanish{}shaded{}adventure"),
                 this.getLibrary("net{}kyori", "adventure-platform-api", "4.1.2", "net{}kyori{}adventure", "me{}quantiom{}advancedvanish{}shaded{}adventure"),
