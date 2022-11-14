@@ -2,6 +2,7 @@ package me.quantiom.advancedvanish.util
 
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
+import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.event.PlayerUnVanishEvent
 import me.quantiom.advancedvanish.event.PlayerVanishEvent
@@ -44,8 +45,8 @@ object AdvancedVanishAPI {
             .map { it.split(":") }
             .filter { it.size > 1 }
             .forEach {
-                PotionEffectType.values().find { e -> e.name == it[0] }?.run {
-                    val currentPotionEffect = player.getPotionEffect(this)
+                PotionEffectType.values().find { e -> e?.name == it[0] }?.run {
+                    val currentPotionEffect = player.activePotionEffects.find { e -> e.type == this }
 
                     if (currentPotionEffect != null) {
                         previousEffects.add(currentPotionEffect)
@@ -53,7 +54,13 @@ object AdvancedVanishAPI {
                         previousEffects.add(this.createEffect(0, 0))
                     }
 
-                    player.addPotionEffect(this.createEffect(Integer.MAX_VALUE, it[1].toInt() - 1))
+                    if (onJoin) {
+                        Bukkit.getScheduler().runTaskLater(AdvancedVanish.instance!!, Runnable {
+                            player.addPotionEffect(this.createEffect(Integer.MAX_VALUE, it[1].toInt() - 1))
+                        }, 10L)
+                    } else {
+                        player.addPotionEffect(this.createEffect(Integer.MAX_VALUE, it[1].toInt() - 1))
+                    }
                 }
             }
 
