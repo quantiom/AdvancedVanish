@@ -65,7 +65,7 @@ Add the dependency and replace `<version>...</version>` with the current version
 <dependency>
   <groupId>me.quantiom</groupId>
   <artifactId>advancedvanish</artifactId>
-  <version>1.2.4</version>
+  <version>1.2.5</version>
 </dependency>
 ```
 
