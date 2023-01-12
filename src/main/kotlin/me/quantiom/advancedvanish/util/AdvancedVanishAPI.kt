@@ -13,6 +13,7 @@ import me.quantiom.advancedvanish.state.VanishStateManager
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
+import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.*
@@ -37,8 +38,11 @@ object AdvancedVanishAPI {
         if (prePlayerVanishEvent.isCancelled) return
 
         this.vanishedPlayers.add(player.uniqueId)
+        
+        // add vanished metadata to player for other plugins to use
+        player.setMetadata("vanished", FixedMetadataValue(AdvancedVanish.instance!!, true))
 
-        val previousEffects: MutableList<PotionEffect> = Lists.newArrayList()
+        val previousEffects: MutableList<PotionEffect> = Lists.newArrayList();
 
         // add potion effects
         Config.getValueOrDefault("when-vanished.give-potion-effects", Lists.newArrayList<String>())
@@ -120,6 +124,10 @@ object AdvancedVanishAPI {
         if (prePlayerUnVanishEvent.isCancelled) return
 
         this.vanishedPlayers.remove(player.uniqueId)
+
+        // remove vanished metadata from player
+        player.removeMetadata("vanished", AdvancedVanish.instance!!)
+
         VanishStateManager.interactEnabled.remove(player.uniqueId)
 
         this.storedPotionEffects[player.uniqueId]?.let {
