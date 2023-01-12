@@ -2,7 +2,10 @@
 ![license](https://img.shields.io/github/license/quantiom/EventHandler?color=%23b59e28&style=for-the-badge) ![made-with-kotlin](https://img.shields.io/badge/MADE%20WITH-KOTLIN-%23b59e28?style=for-the-badge&logo=java)  ![last-commit](https://img.shields.io/github/last-commit/quantiom/AdvancedVanish?color=%23b59e28&style=for-the-badge)  
 
 AdvancedVanish is a fully customizable and advanced vanish plugin made with Kotlin.  
+
 Spigot Resource: https://www.spigotmc.org/resources/advancedvanish.86036/
+
+GitBook: https://quantioms.gitbook.io/advancedvanish/
 
 ## Features
 - Fully customizable through the [config](src/main/resources/config.yml). (70+ options)
@@ -13,7 +16,7 @@ Spigot Resource: https://www.spigotmc.org/resources/advancedvanish.86036/
   - Placeholders
   - Much more...
 - Vanished players are **completely** invisible, as if they are not even online.
-- Vanish priorities/levels ([more info](https://github.com/quantiom/AdvancedVanish/blob/main/src/main/resources/config.yml#L93-L114))
+- Vanish priorities/levels ([more info](https://quantioms.gitbook.io/advancedvanish/features#vanish-priorities))
   - Supports many different permissions plugins. (LuckPerms, PermissionsEx, bPermissions, GroupManager)
 - Many configurable hooks which provide support to other plugins.
    - Essentials
@@ -30,14 +33,16 @@ Spigot Resource: https://www.spigotmc.org/resources/advancedvanish.86036/
   - `/vanish status <player>` *- Check if a player is in vanish.*
   - `/vanish set <player> <on/off>` *- Set another player's vanish.*
   - `/vanish toggle <player>` *- Toggle another player's vanish.*
-- For the rest of the features, check out the [config](src/main/resources/config.yml).
+  - `/vanish interact` *- Toggles interacting while in vanish*
+- Cross Server Vanish Synchronization
+- For the rest of the features, check out the [GitBook page](https://quantioms.gitbook.io/advancedvanish/).
 
 ## Hooks
 In AdvancedVanish, there are many hooks which provide support to other plugins.  
-A full list of hooks with their descriptions can be found in the [config](src/main/resources/config.yml).  
+A full list of hooks with their descriptions can be found on the [GitBook page](https://quantioms.gitbook.io/advancedvanish/features#hooks).  
 
 ## Vanish Priority
-An explanation and guide of how to use vanish priorities can be found in the [config](src/main/resources/config.yml).  
+An explanation and guide of how to use vanish priorities can be found on the [GitBook page](https://quantioms.gitbook.io/advancedvanish/features#vanish-priorities).  
 *Note: Requires a supported permissions plugin to function*
 
 ## API
@@ -49,17 +54,18 @@ your plugin's `plugin.yml`.
 Add this repository to your `pom.xml`:
 ```xml
 <repository>
-  <id>jitpack.io</id>
-  <url>https://jitpack.io</url>
-</repository>  
+  <id>repsy</id>
+  <name>quantiom</name>
+  <url>https://repo.repsy.io/mvn/quantiom/minecraft</url>
+</repository>
 ```
 
 Add the dependency and replace `<version>...</version>` with the current version:
 ```xml
 <dependency>
-  <groupId>com.github.quantiom</groupId>
-  <artifactId>AdvancedVanish</artifactId>
-  <version>v1.1.8</version>
+  <groupId>me.quantiom</groupId>
+  <artifactId>advancedvanish</artifactId>
+  <version>1.2.4</version>
 </dependency>
 ```
 

@@ -7,8 +7,16 @@
 ###################################################################################
 # Made by quantiom, config made for v%PROJECT_VERSION%
 
+# GitBook page: https://quantioms.gitbook.io/advancedvanish/
+
+# Messages in this config use MiniMessage formatting
+# For example, the message "&4Hello &a&lWorld" would need to be "<red>Hello <green><bold>World"
+# Please check the documentation for more information: https://docs.adventure.kyori.net/minimessage/format.html
+
 # Automatically check for updates
 check-for-updates: true
+
+# WARNING: The three following options will be IGNORED if cross-server-support is enabled
 
 # Enable vanish on join
 vanish-on-join: true
@@ -20,6 +28,24 @@ keep-vanish-state: false
 # Stores vanish states to a file, so they
 # persist outside of server restarts
 keep-vanish-state-persistent: false
+
+# Cross-server vanish synchronization
+# Requires Redis or SQL
+cross-server-support:
+  enabled: false
+  # Either "redis" or "sql"
+  mode: "redis"
+  redis:
+    ip: "127.0.0.1"
+    port: 6379
+    auth: ""
+  sql:
+    ip: "127.0.0.1"
+    port: 3306
+    username: "root"
+    password: ""
+    database: "minecraft"
+    table-prefix: "advancedvanish_"
 
 # Actions when players are vanished
 # true = enabled, false = disabled
@@ -68,12 +94,12 @@ join-leave-messages:
     enable: false
     # Placeholders:
     #   %priority% - The player's vanish priority
-    message: "&e%player-name% has joined the game"
+    message: "<yellow>%player-name% has joined the game"
   fake-leave-message-on-vanish:
     enable: false
     # Placeholders:
     #   %player-name% - The player's name
-    message: "&e%player-name% has left the game."
+    message: "<yellow>%player-name% has left the game."
 
 # Hooks that will add support to other plugins
 # Some hooks will not be enabled if the required plugin(s) are not found
@@ -87,7 +113,7 @@ hooks:
   placeholders: true
   # Shows a message above the hotbar if a player is vanished
   # The configurable message is in the messages section below.
-  # Does NOT require ActionBarAPI if you are running 1.16+
+  # Does NOT require or use ActionBarAPI
   actionbar: true
   # Requires DiscordSRV, sends a fake leave and join message when vanished/unvanished
   # and also requires the fake-join-message-on-unvanish / fake-leave-message-on-vanish to be
@@ -143,12 +169,12 @@ messages:
   # Set/enable a prefix used before all messages
   prefix:
     enabled: true
-    value: "&c[AdvancedVanish]&f "
-  no-permission: "&cYou do not have permission to use this command."
+    value: "<red>[AdvancedVanish]<white> "
+  no-permission: "<red>You do not have permission to use this command."
   config-reloaded: "Successfully reloaded the config."
   # Placeholders:
   #   %version% - The plugin version
-  version-command: "This server is running AdvancedVanish &c%version%&f by quantiom"
+  version-command: "This server is running AdvancedVanish <red>%version%<white> by quantiom"
   vanish-on: "You are now in vanish."
   vanish-off: "You are no longer in vanish."
   cannot-chat-while-vanished: "You cannot chat while you are in vanish."
@@ -161,50 +187,50 @@ messages:
   opening-container-silently: "Opening %type% silently..."
   # Placeholders:
   #   %priority% - The player's vanish priority
-  vanish-priority: "Your vanish priority is &c%priority%&f."
+  vanish-priority: "Your vanish priority is <red>%priority%<white>."
   not-using-vanish-priority: "You are not using vanish priority, it can be enabled in the config."
   # Placeholders:
   #   %vanished-players% - A list of vanished players, or "None"
-  vanished-list: "Vanished players: &c%vanished-players%"
+  vanished-list: "Vanished players: <red>%vanished-players%"
   # Placeholders:
   #   %target-name% - The target's username
   #   %vanish-status% - "on" or "off"
   #   %vanish-status-word% - "vanished" or "not vanished"
-  vanish-status-command: "&c%target-name%&f is currently &c%vanish-status-word%&f."
+  vanish-status-command: "<red>%target-name%<white> is currently <red>%vanish-status-word%<white>."
   # Placeholders:
   #   %target-name% - The target's username
   #   %vanish-status% - "on" or "off"
   #   %vanish-status-word% - "vanished" or "not vanished"
   # This message is also used with the toggle command
-  vanish-set-other-command: "&fSet &c%target-name%'s&f vanish to &c%vanish-status%&f."
+  vanish-set-other-command: "<white>Set <red>%target-name%'s<white> vanish to <red>%vanish-status%<white>."
   # Placeholders:
   #   %target-name% - The target's username
   #   %vanish-status% - "on" or "off"
   #   %vanish-status-word% - "vanished" or "not vanished"
-  vanish-set-other-command-already: "&c%target-name%&f is already &c%vanish-status-word%"
-  must-be-vanished-to-use-command: "&cYou must be vanished to use this command."
+  vanish-set-other-command-already: "<red>%target-name%<white> is already <red>%vanish-status-word%"
+  must-be-vanished-to-use-command: "<red>You must be vanished to use this command."
   # Placeholders:
   #   %interact-status%" - "on" or "off"
-  vanish-interact-toggled: "&fYou have turned %interact-status% interacting while vanished."
-  action-bar: "&cYou are in vanish."
-  disguise-removed-because-vanish: "Your disguise has been &cremoved&f because you are in vanish"
+  vanish-interact-toggled: "<white>You have turned %interact-status% interacting while vanished."
+  action-bar: "<red>You are in vanish."
+  disguise-removed-because-vanish: "Your disguise has been <red>removed<white> because you are in vanish"
 
 # Messages from the command handler
 command-handler-messages:
   # Will use the prefix from the message section above before all of these messages
   use-prefix: true
-  unknown-command: "&cInvalid arguments."
+  unknown-command: "<red>Invalid arguments."
   # Placeholders:
   #   %command%
   #   %syntax%
-  invalid-syntax: "&cUsage: %command% %syntax%"
-  error-performing-command: "&cThere was an error performing this command."
+  invalid-syntax: "<red>Usage: %command% %syntax%"
+  error-performing-command: "<red>There was an error performing this command."
   # Placeholders:
   #   %search% - The given player name
-  could-not-find-player: "&cCouldn't find a player by the name of %search%."
+  could-not-find-player: "<red>Couldn't find a player by the name of %search%."
   # Placeholders:
   #   %error% - The error message
-  generic-error: "&cError: %error%"
+  generic-error: "<red>Error: %error%"
 
 # Config version - Do NOT change this manually
 config-version: %CONFIG_VERSION%

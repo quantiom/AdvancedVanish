@@ -2,14 +2,12 @@ package me.quantiom.advancedvanish.util
 
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
-import github.scarsz.discordsrv.DiscordSRV
 import me.quantiom.advancedvanish.AdvancedVanish
 import me.quantiom.advancedvanish.config.Config
 import me.quantiom.advancedvanish.event.PlayerUnVanishEvent
 import me.quantiom.advancedvanish.event.PlayerVanishEvent
 import me.quantiom.advancedvanish.event.PrePlayerUnVanishEvent
 import me.quantiom.advancedvanish.event.PrePlayerVanishEvent
-import me.quantiom.advancedvanish.hook.HooksManager
 import me.quantiom.advancedvanish.permission.PermissionsManager
 import me.quantiom.advancedvanish.state.VanishStateManager
 import org.bukkit.Bukkit
@@ -34,16 +32,15 @@ object AdvancedVanishAPI {
      * @param onJoin If this is being called from the PlayerJoinEvent, used for hook/fake join and leave message functionality
      */
     fun vanishPlayer(player: Player, onJoin: Boolean = false) {
-        val prePlayerVanishEvent = PrePlayerVanishEvent(player)
+        val prePlayerVanishEvent = PrePlayerVanishEvent(player, onJoin)
         Bukkit.getPluginManager().callEvent(prePlayerVanishEvent)
 
         if (prePlayerVanishEvent.isCancelled) return
 
         this.vanishedPlayers.add(player.uniqueId)
-
+        
         // add vanished metadata to player for other plugins to use
         player.setMetadata("vanished", FixedMetadataValue(AdvancedVanish.instance!!, true))
-
 
         val previousEffects: MutableList<PotionEffect> = Lists.newArrayList();
 
@@ -52,8 +49,8 @@ object AdvancedVanishAPI {
             .map { it.split(":") }
             .filter { it.size > 1 }
             .forEach {
-                PotionEffectType.values().find { e -> e.name == it[0] }?.run {
-                    val currentPotionEffect = player.getPotionEffect(this)
+                PotionEffectType.values().find { e -> e?.name == it[0] }?.run {
+                    val currentPotionEffect = player.activePotionEffects.find { e -> e.type == this }
 
                     if (currentPotionEffect != null) {
                         previousEffects.add(currentPotionEffect)
@@ -61,7 +58,13 @@ object AdvancedVanishAPI {
                         previousEffects.add(this.createEffect(0, 0))
                     }
 
-                    player.addPotionEffect(this.createEffect(Integer.MAX_VALUE, it[1].toInt() - 1))
+                    if (onJoin) {
+                        Bukkit.getScheduler().runTaskLater(AdvancedVanish.instance!!, Runnable {
+                            player.addPotionEffect(this.createEffect(Integer.MAX_VALUE, it[1].toInt() - 1))
+                        }, 10L)
+                    } else {
+                        player.addPotionEffect(this.createEffect(Integer.MAX_VALUE, it[1].toInt() - 1))
+                    }
                 }
             }
 
@@ -92,23 +95,19 @@ object AdvancedVanishAPI {
         if (!onJoin && Config.getValueOrDefault("join-leave-messages.fake-leave-message-on-vanish.enable", false)) {
             val message = Config.getValueOrDefault(
                 "join-leave-messages.fake-leave-message-on-vanish.message",
-                "&e%player-name% has left the game."
+                "<yellow>%player-name% has left the game."
             ).applyPlaceholders(
                 "%player-name%" to player.name
             ).color()
 
-            Bukkit.broadcastMessage(message)
-
-            if (HooksManager.isHookEnabled("DiscordSrv")) {
-                DiscordSRV.getPlugin().sendLeaveMessage(player, message)
-            }
+            Bukkit.getOnlinePlayers().forEach { it.sendComponentMessage(message) }
         }
 
         if (Config.getValueOrDefault("when-vanished.fly.enable", true)) {
             player.allowFlight = true
         }
 
-        Bukkit.getPluginManager().callEvent(PlayerVanishEvent(player))
+        Bukkit.getPluginManager().callEvent(PlayerVanishEvent(player, onJoin))
     }
 
     /**
@@ -119,7 +118,7 @@ object AdvancedVanishAPI {
      * @param onLeave If this is being called from the PlayerQuitEvent, used for hook/fake join and leave message functionality
      */
     fun unVanishPlayer(player: Player, onLeave: Boolean = false) {
-        val prePlayerUnVanishEvent = PrePlayerUnVanishEvent(player)
+        val prePlayerUnVanishEvent = PrePlayerUnVanishEvent(player, onLeave)
         Bukkit.getPluginManager().callEvent(prePlayerUnVanishEvent)
 
         if (prePlayerUnVanishEvent.isCancelled) return
@@ -158,19 +157,15 @@ object AdvancedVanishAPI {
         if (!onLeave && Config.getValueOrDefault("join-leave-messages.fake-join-message-on-unvanish.enable", false)) {
             val message = Config.getValueOrDefault(
                 "join-leave-messages.fake-join-message-on-unvanish.message",
-                "&e%player-name% has joined the game."
+                "<yellow>%player-name% has joined the game."
             ).applyPlaceholders(
                 "%player-name%" to player.name
             ).color()
 
-            Bukkit.broadcastMessage(message)
-
-            if (HooksManager.isHookEnabled("DiscordSrv")) {
-                DiscordSRV.getPlugin().sendJoinMessage(player, message)
-            }
+            Bukkit.getOnlinePlayers().forEach { it.sendComponentMessage(message) }
         }
 
-        Bukkit.getPluginManager().callEvent(PlayerUnVanishEvent(player))
+        Bukkit.getPluginManager().callEvent(PlayerUnVanishEvent(player, onLeave))
     }
 
     fun refreshVanished(player: Player) {

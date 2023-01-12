@@ -52,7 +52,7 @@ object VanishStateManager {
     }
 
     fun canInteract(player: Player): Boolean {
-        return this.interactEnabled.contains(player.uniqueId);
+        return this.interactEnabled.contains(player.uniqueId)
     }
 
     private fun getFile(): File? {

@@ -14,12 +14,6 @@ class EssentialsHook : IHook {
 
     override fun getID() = "Essentials"
 
-    // remove essentials vanish
-    @EventHandler(priority = EventPriority.LOWEST)
-    private fun onJoin(event: PlayerJoinEvent) {
-        this.essentials.getUser(event.player).isVanished = false
-    }
-
     @EventHandler
     private fun onVanish(event: PlayerVanishEvent) {
         if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
@@ -28,7 +22,7 @@ class EssentialsHook : IHook {
     }
 
     @EventHandler
-    private fun onUnvanish(event: PlayerUnVanishEvent) {
+    private fun onUnVanish(event: PlayerUnVanishEvent) {
         if (Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
             this.essentials.getUser(event.player).isHidden = false
         }

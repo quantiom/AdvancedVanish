@@ -2,7 +2,7 @@ name: ${project.name}
 description: ${project.description}
 author: quantiom
 version: ${project.version}
-main: ${project.groupId}.${project.artifactId}.${project.name}
+main: ${project.groupId}.${project.artifactId}.${project.name}Plugin
 softdepend: [LuckPerms, PlaceholderAPI, GroupManager, PermissionsEx, bPermissions, DiscordSRV, Dynmap, squaremap, LibsDisguises, PlayerParticles, Essentials, PlaceholderAPI, ProtocolLib]
 api-version: 1.13
 commands:
