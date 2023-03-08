@@ -81,7 +81,7 @@ AdvancedVanishAPI.canSee(player: Player, target: Player): Boolean
 Player.isVanished(): Boolean
 ```
 ### Events
-- `PrePlayerVanishEvent` - Gets called before vanishing a player, implements `Canellable`.
+- `PrePlayerVanishEvent` - Gets called before vanishing a player, implements `Cancellable`.
 - `PlayerVanishEvent` - Gets called after a player vanishes.
 - `PrePlayerUnVanishEvent` - Gets called before a player unvanishes, implements `Cancellable`.
 - `PlayerUnVanishEvent` - Gets called after a player unvanishes.
