@@ -9,11 +9,9 @@ import me.quantiom.advancedvanish.permission.PermissionsManager
 import me.quantiom.advancedvanish.state.VanishStateManager
 import me.quantiom.advancedvanish.sync.ServerSyncManager
 import me.quantiom.advancedvanish.util.AdvancedVanishAPI
-import me.quantiom.advancedvanish.util.DependencyManager
 import me.quantiom.advancedvanish.util.UpdateChecker
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import org.bukkit.Bukkit
-import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
 
 object AdvancedVanish {
