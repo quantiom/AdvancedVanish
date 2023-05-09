@@ -40,10 +40,6 @@ public final class DependencyManager {
         kotlinStr += "tlin";
 
         List<Library> libraries = Lists.newArrayList(
-                // exposed
-                this.getLibrary("org{}jetbrains{}exposed", "exposed-core", "0.39.2", "org{}jetbrains{}exposed", "me{}quantiom{}advancedvanish{}shaded{}exposed"),
-                this.getLibrary("org{}jetbrains{}exposed", "exposed-dao", "0.39.2", "org{}jetbrains{}exposed", "me{}quantiom{}advancedvanish{}shaded{}exposed"),
-                this.getLibrary("org{}jetbrains{}exposed", "exposed-jdbc", "0.39.2", "org{}jetbrains{}exposed", "me{}quantiom{}advancedvanish{}shaded{}exposed"),
                 // redis
                 this.getLibrary("redis{}clients", "jedis", "4.2.0", "", ""),
                 this.getLibrary("org{}apache{}commons", "commons-pool2", "2.11.1", "", ""),
