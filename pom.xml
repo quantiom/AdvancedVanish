@@ -238,7 +238,7 @@
     </dependencies>
 
     <build>
-        <finalName>AdvancedVanish</finalName>
+        <finalName>AdvancedVanish-${project.version}</finalName>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <resources>
             <resource>
