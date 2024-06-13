@@ -58,12 +58,17 @@ object AdvancedVanishAPI {
                         previousEffects.add(this.createEffect(0, 0))
                     }
 
+                    // Check server ver for impl of infinite duration (1.19.4+)
+                    val duration = if (Bukkit.getVersion().contains("1.19.4") || Bukkit.getVersion().contains(" 1.2")) {
+                        -1
+                    } else Integer.MAX_VALUE
+
                     if (onJoin) {
                         Bukkit.getScheduler().runTaskLater(AdvancedVanish.instance!!, Runnable {
-                            player.addPotionEffect(this.createEffect(Integer.MAX_VALUE, it[1].toInt() - 1))
+                            player.addPotionEffect(this.createEffect(duration, it[1].toInt() - 1))
                         }, 10L)
                     } else {
-                        player.addPotionEffect(this.createEffect(Integer.MAX_VALUE, it[1].toInt() - 1))
+                        player.addPotionEffect(this.createEffect(duration, it[1].toInt() - 1))
                     }
                 }
             }
